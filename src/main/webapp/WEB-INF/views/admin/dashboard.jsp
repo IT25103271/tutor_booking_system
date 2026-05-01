@@ -86,19 +86,82 @@
             font-size: 0.8rem;
             border: 1px solid rgba(255,255,255,0.4);
         }
+        .footer {
+            background: #0d1b2a;
+            color: rgba(255,255,255,0.7);
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+            border-top: 2px solid #00b4d8;
+        }
+        .footer-brand { color: #fff; font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem; display: block; text-decoration: none; }
+        .footer-link { color: rgba(255,255,255,0.6); text-decoration: none; transition: 0.3s; display: block; margin-bottom: 0.5rem; font-size: 0.85rem; }
+        .footer-link:hover { color: #00b4d8; }
+        .footer-heading { color: #fff; font-weight: 700; margin-bottom: 1.2rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px; opacity: 0.9; }
+        .footer-info-text { font-size: 0.85rem; line-height: 1.6; }
+        .footer-info-label { color: #fff; font-weight: 600; font-size: 0.8rem; margin-top: 1rem; margin-bottom: 0.2rem; display: block; opacity: 0.8; }
     </style>
 </head>
 <body>
 
 <nav class="navbar">
     <span class="navbar-brand">
-        <i class="bi bi-shield-check me-2"></i>Admin Panel
+        <i class="bi bi-shield-check me-2 fs-2 text-warning"></i>
+        <span class="fs-4 fw-bolder">Admin Panel</span>
     </span>
-    <div class="ms-auto">
+    <div class="ms-auto d-flex align-items-center">
+        <!-- Admin Notification Dropdown -->
+        <div class="dropdown me-4">
+            <a href="#" class="text-white text-decoration-none position-relative" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-bell-fill fs-5"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.5rem; padding: 0.25em 0.4em;">
+                    5
+                    <span class="visually-hidden">unread notifications</span>
+                </span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-3 p-0" style="width: 320px; border-radius: 15px; overflow: hidden;">
+                <li class="bg-primary text-white px-3 py-3" style="background: linear-gradient(135deg, #1a1a2e, #0f3460) !important;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="fw-bold mb-0">Admin Alerts</h6>
+                        <span class="badge bg-white text-dark rounded-pill" style="font-size: 0.7rem;">5 New</span>
+                    </div>
+                </li>
+                <li>
+                    <a class="dropdown-item py-3 border-bottom px-3" href="#">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-warning bg-opacity-10 p-2 rounded-circle me-3">
+                                <i class="bi bi-person-plus text-warning"></i>
+                            </div>
+                            <div style="white-space: normal;">
+                                <div class="small fw-bold text-dark">New Tutor Registration</div>
+                                <div class="small text-muted">Alex Rivera has applied to be a Math tutor.</div>
+                                <div class="very-small text-primary mt-1" style="font-size: 0.7rem;">10 mins ago</div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item py-3 border-bottom px-3" href="#">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-danger bg-opacity-10 p-2 rounded-circle me-3">
+                                <i class="bi bi-exclamation-triangle text-danger"></i>
+                            </div>
+                            <div style="white-space: normal;">
+                                <div class="small fw-bold text-dark">System Alert</div>
+                                <div class="small text-muted">Database backup completed with 2 warnings.</div>
+                                <div class="very-small text-primary mt-1" style="font-size: 0.7rem;">1 hour ago</div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="text-center bg-light">
+                    <a href="#" class="dropdown-item small py-2 text-primary fw-bold">View All Admin Logs</a>
+                </li>
+            </ul>
+        </div>
         <span class="text-white me-3">
             <i class="bi bi-person-circle me-1"></i>${sessionScope.adminName}
         </span>
-        <a href="/admin/logout" class="btn btn-outline-light btn-sm">
+        <a href="${pageContext.request.contextPath}/admin/logout" class="btn btn-outline-light btn-sm">
             <i class="bi bi-box-arrow-right me-1"></i>Logout
         </a>
     </div>
@@ -166,10 +229,10 @@
                 </div>
             </div>
             <div class="d-flex gap-3 mt-4">
-                <a href="/admin/edit" class="btn-edit">
+                <a href="${pageContext.request.contextPath}/admin/edit" class="btn-edit">
                     <i class="bi bi-pencil-square me-2"></i>Edit Profile
                 </a>
-                <form method="post" action="/admin/delete" onsubmit="return confirm('Are you sure you want to delete you account? This cannot be undone!')">
+                <form method="post" action="${pageContext.request.contextPath}/admin/delete" onsubmit="return confirm('Are you sure you want to delete you account? This cannot be undone!')">
                     <button type="submit" class="btn btn-delete">
                         <i class="bi bi-trash me-2"></i>Delete My Account
                     </button>
@@ -178,6 +241,39 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <a href="#" class="footer-brand">
+                        <i class="bi bi-mortarboard-fill me-2 text-info"></i>Tutor Booking
+                    </a>
+                    <p class="footer-info-text mb-0 opacity-50 small">
+                        This is a academic project developed for<br>
+                        <strong>SE1020 - OOP Module at SLIIT</strong> by Group WD204
+                    </p>
+                </div>
+                <div class="col-6 col-lg-2 mb-5 mb-lg-0">
+                    <h6 class="footer-heading">Admin Links</h6>
+                    <a href="${pageContext.request.contextPath}/admin/dashboard" class="footer-link">Admin Dashboard</a>
+                    <a href="${pageContext.request.contextPath}/admin/edit" class="footer-link">Edit Admin Profile</a>
+                </div>
+                <div class="col-lg-6">
+                    <h6 class="footer-heading">Contact Us</h6>
+                    <div class="footer-info-text">
+                        <span class="footer-info-label">Address</span>
+                        SLIIT, New Kandy Road, Malabe,<br>Colombo, Sri Lanka
+                        <p class="mt-2 text-info opacity-75 small italic mb-4">
+                            <i class="bi bi-info-circle me-1"></i> Meet at the university premises
+                        </p>
+                        <hr class="opacity-10">
+                        <p class="mb-0 opacity-50 small">&copy; 2026 WD204 | SLIIT | All Rights Reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
