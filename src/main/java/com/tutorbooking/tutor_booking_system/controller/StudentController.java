@@ -1,6 +1,7 @@
 package com.tutorbooking.tutor_booking_system.controller;
 
 import com.tutorbooking.tutor_booking_system.model.Student;
+import com.tutorbooking.tutor_booking_system.service.BookingService;
 import com.tutorbooking.tutor_booking_system.service.StudentService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private BookingService bookingService;
 
     @GetMapping("/register")
     public String registerPage() {
@@ -46,6 +50,14 @@ public class StudentController {
         }
         session.setAttribute("studentId", student.getId());
         session.setAttribute("studentName", student.getName());
+        
+        // Handle Last Login
+        if (student.getLastLogin() != null) {
+            session.setAttribute("lastLoginTime", student.getLastLogin());
+        }
+        student.setLastLogin(java.time.LocalDateTime.now());
+        studentService.updateStudent(student);
+        
         return "redirect:/student/dashboard";
     }
 
@@ -57,7 +69,52 @@ public class StudentController {
         }
         Student student = studentService.getStudentById(studentId);
         model.addAttribute("student", student);
+        
+        model.addAttribute("confirmedCount", bookingService.getBookingCountByStatus(student, "Confirmed"));
+        model.addAttribute("pendingCount", bookingService.getBookingCountByStatus(student, "Pending"));
+        model.addAttribute("cancelledCount", bookingService.getBookingCountByStatus(student, "Cancelled"));
+        
         return "student/dashboard";
+    }
+
+    @GetMapping("/profile")
+    public String profile(HttpSession session, Model model) {
+        Long studentId = (Long) session.getAttribute("studentId");
+        if (studentId == null) {
+            return "redirect:/student/login";
+        }
+        Student student = studentService.getStudentById(studentId);
+        model.addAttribute("student", student);
+        
+        model.addAttribute("confirmedCount", bookingService.getBookingCountByStatus(student, "Confirmed"));
+        model.addAttribute("pendingCount", bookingService.getBookingCountByStatus(student, "Pending"));
+        model.addAttribute("cancelledCount", bookingService.getBookingCountByStatus(student, "Cancelled"));
+        
+        return "student/profile";
+    }
+
+    @GetMapping("/edit-profile")
+    public String editProfilePage(HttpSession session, Model model) {
+        Long studentId = (Long) session.getAttribute("studentId");
+        if (studentId == null) {
+            return "redirect:/student/login";
+        }
+        Student student = studentService.getStudentById(studentId);
+        model.addAttribute("student", student);
+        return "student/edit-profile";
+    }
+
+    @PostMapping("/edit-profile")
+    public String updateProfile(@ModelAttribute Student student, HttpSession session, RedirectAttributes ra) {
+        Long studentId = (Long) session.getAttribute("studentId");
+        if (studentId == null) {
+            return "redirect:/student/login";
+        }
+        student.setId(studentId); // Ensure the ID is set correctly
+        studentService.updateStudent(student);
+        session.setAttribute("studentName", student.getName());
+        ra.addFlashAttribute("success", "Profile updated successfully!");
+        return "redirect:/student/profile";
     }
 
     @GetMapping("/logout")
