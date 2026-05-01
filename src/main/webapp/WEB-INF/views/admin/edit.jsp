@@ -73,9 +73,17 @@
 <body>
 <nav class="navbar">
     <span class="navbar-brand">
-        <i class="bi bi-shield-check me-2"></i>Admin Panel
+        <i class="bi bi-shield-check me-2 fs-2 text-warning"></i>
+        <span class="fs-4 fw-bolder">Admin Panel</span>
     </span>
-    <div class="ms-auto">
+    <div class="ms-auto d-flex align-items-center">
+        <a href="#" class="text-white me-3 text-decoration-none position-relative">
+            <i class="bi bi-bell-fill fs-5"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.5rem; padding: 0.25em 0.4em;">
+                5
+                <span class="visually-hidden">unread notifications</span>
+            </span>
+        </a>
         <span class="text-white me-3">
             <i class="bi bi-person-circle me-1"></i>${sessionScope.adminName}
         </span>

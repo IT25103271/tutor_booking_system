@@ -91,7 +91,7 @@
                 <i class="bi bi-check-circle me-1"></i>${success}
             </div>
         </c:if>
-        <form method="post" action="/admin/login">
+        <form method="post" action="${pageContext.request.contextPath}/admin/login">
             <div class="mb-3">
                 <label class="form-label fw-semibold small text-muted">Email Address</label>
                 <div class="input-group">
