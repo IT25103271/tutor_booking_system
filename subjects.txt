@@ -1,0 +1,5 @@
+SUB001|Combined Mathematics|Mathematics|Grade 12-13 (A/L)|Advanced mathematics for A/L students.|Active
+SUB002|Science (Integrated)|Science|Grade 6-9|Covers physics, chemistry and biology basics.|Active
+SUB003|English Language|Languages|Grade 10-11 (O/L)|Grammar, comprehension and essay writing.|Active
+SUB004|Physics|Science|Grade 12-13 (A/L)|Mechanics, electricity and modern physics.|Active
+SUB005|Sinhala Language|Languages|All Grades|Sinhala reading, writing and grammar.|Active
