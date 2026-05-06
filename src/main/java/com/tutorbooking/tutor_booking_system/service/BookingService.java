@@ -29,4 +29,12 @@ public class BookingService {
     public long getBookingCountByStatus(Student student, String status) {
         return bookingRepository.countByStudentAndStatus(student, status);
     }
+
+    public long getTotalBookingCount() {
+        return bookingRepository.count();
+    }
+
+    public long getOverallBookingCountByStatus(String status) {
+        return bookingRepository.countByStatus(status);
+    }
 }

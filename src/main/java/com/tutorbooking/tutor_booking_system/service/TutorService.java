@@ -20,4 +20,8 @@ public class TutorService {
     public Tutor getTutorById(Long id) {
         return tutorRepository.findById(id).orElse(null);
     }
+
+    public long getTutorCount() {
+        return tutorRepository.count();
+    }
 }

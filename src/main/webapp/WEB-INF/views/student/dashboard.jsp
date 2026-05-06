@@ -370,7 +370,18 @@
                 greeting = 'Good Night';
             }
             
-            document.getElementById('timeGreeting').innerText = greeting;
+            const greetingElement = document.getElementById('timeGreeting');
+            if (greetingElement) greetingElement.innerText = greeting;
+
+            // Notification persistence logic
+            const readNotifications = JSON.parse(localStorage.getItem('readNotifications') || '[]');
+            readNotifications.forEach(id => {
+                const item = document.getElementById(id);
+                if (item) {
+                    item.classList.add('d-none');
+                }
+            });
+            updateBadgeCount();
         });
 
         function markAsRead(event, id) {
@@ -383,43 +394,60 @@
             
             setTimeout(() => {
                 item.classList.add('d-none');
-                updateBadgeCount(-1);
+                
+                // Persist to localStorage
+                const readNotifications = JSON.parse(localStorage.getItem('readNotifications') || '[]');
+                if (!readNotifications.includes(id)) {
+                    readNotifications.push(id);
+                    localStorage.setItem('readNotifications', JSON.stringify(readNotifications));
+                }
+                
+                updateBadgeCount();
                 checkEmptyNotifs();
             }, 300);
         }
 
         function markAllRead() {
             const items = document.querySelectorAll('.notification-item:not(.d-none)');
-            const count = items.length;
+            const readNotifications = JSON.parse(localStorage.getItem('readNotifications') || '[]');
+            
             items.forEach(item => {
+                const id = item.id;
                 item.style.opacity = '0.5';
+                if (!readNotifications.includes(id)) {
+                    readNotifications.push(id);
+                }
                 setTimeout(() => item.classList.add('d-none'), 300);
             });
+            
+            localStorage.setItem('readNotifications', JSON.stringify(readNotifications));
+            
             setTimeout(() => {
-                updateBadgeCount(-count);
+                updateBadgeCount();
                 checkEmptyNotifs();
             }, 400);
         }
 
-        function updateBadgeCount(delta) {
+        function updateBadgeCount() {
             const badge = document.getElementById('notif-badge');
             if (!badge) return;
             
-            let currentCount = parseInt(badge.innerText) || 0;
-            currentCount += delta;
+            const visibleItems = document.querySelectorAll('.notification-item:not(.d-none)');
+            const count = visibleItems.length;
             
-            if (currentCount <= 0) {
+            if (count <= 0) {
                 badge.classList.add('d-none');
             } else {
-                badge.innerText = currentCount;
+                badge.innerText = count;
                 badge.classList.remove('d-none');
             }
         }
 
         function checkEmptyNotifs() {
             const items = document.querySelectorAll('.notification-item:not(.d-none)');
-            if (items.length === 0) {
-                // Optional: show "No new notifications" message
+            const container = document.getElementById('notifDropdown')?.nextElementSibling;
+            if (items.length === 0 && container) {
+                // You could add a "No new notifications" message here if desired
             }
         }
     </script>

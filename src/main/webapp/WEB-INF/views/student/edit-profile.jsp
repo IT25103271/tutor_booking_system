@@ -191,6 +191,18 @@
     </footer>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Notification persistence logic
+            const readNotifications = JSON.parse(localStorage.getItem('readNotifications') || '[]');
+            readNotifications.forEach(id => {
+                const item = document.getElementById(id);
+                if (item) {
+                    item.classList.add('d-none');
+                }
+            });
+            updateBadgeCount();
+        });
+
         function markAsRead(event, id) {
             if (event) event.stopPropagation();
             const item = document.getElementById(id);
@@ -198,31 +210,52 @@
 
             item.style.opacity = '0.5';
             item.style.background = '#f8f9fa';
+            
             setTimeout(() => {
                 item.classList.add('d-none');
-                updateBadgeCount(-1);
+                
+                // Persist to localStorage
+                const readNotifications = JSON.parse(localStorage.getItem('readNotifications') || '[]');
+                if (!readNotifications.includes(id)) {
+                    readNotifications.push(id);
+                    localStorage.setItem('readNotifications', JSON.stringify(readNotifications));
+                }
+                
+                updateBadgeCount();
             }, 300);
         }
 
         function markAllRead() {
             const items = document.querySelectorAll('.notification-item:not(.d-none)');
-            const count = items.length;
+            const readNotifications = JSON.parse(localStorage.getItem('readNotifications') || '[]');
+            
             items.forEach(item => {
+                const id = item.id;
                 item.style.opacity = '0.5';
+                if (!readNotifications.includes(id)) {
+                    readNotifications.push(id);
+                }
                 setTimeout(() => item.classList.add('d-none'), 300);
             });
-            setTimeout(() => updateBadgeCount(-count), 400);
+            
+            localStorage.setItem('readNotifications', JSON.stringify(readNotifications));
+            
+            setTimeout(() => {
+                updateBadgeCount();
+            }, 400);
         }
 
-        function updateBadgeCount(delta) {
+        function updateBadgeCount() {
             const badge = document.getElementById('notif-badge');
             if (!badge) return;
-            let currentCount = parseInt(badge.innerText) || 0;
-            currentCount += delta;
-            if (currentCount <= 0) {
+            
+            const visibleItems = document.querySelectorAll('.notification-item:not(.d-none)');
+            const count = visibleItems.length;
+            
+            if (count <= 0) {
                 badge.classList.add('d-none');
             } else {
-                badge.innerText = currentCount;
+                badge.innerText = count;
                 badge.classList.remove('d-none');
             }
         }

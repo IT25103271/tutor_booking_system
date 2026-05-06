@@ -40,4 +40,8 @@ public class StudentService {
     public boolean emailExists(String email) {
         return studentRepository.existsByEmail(email);
     }
+
+    public long getStudentCount() {
+        return studentRepository.count();
+    }
 }

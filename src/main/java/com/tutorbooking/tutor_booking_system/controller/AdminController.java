@@ -3,6 +3,9 @@ package com.tutorbooking.tutor_booking_system.controller;
 import jakarta.servlet.http.HttpSession;
 import com.tutorbooking.tutor_booking_system.model.Admin;
 import com.tutorbooking.tutor_booking_system.service.AdminService;
+import com.tutorbooking.tutor_booking_system.service.StudentService;
+import com.tutorbooking.tutor_booking_system.service.TutorService;
+import com.tutorbooking.tutor_booking_system.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,15 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private TutorService tutorService;
+
+    @Autowired
+    private BookingService bookingService;
+
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model){
         if(session.getAttribute("adminId")==null){
@@ -27,6 +39,14 @@ public class AdminController {
         Long adminId=Long.valueOf(session.getAttribute("adminId").toString());
         Admin admin=adminService.getAdminById(adminId);
         model.addAttribute("admin",admin);
+
+        // Fetch System Stats
+        model.addAttribute("studentCount", studentService.getStudentCount());
+        model.addAttribute("tutorCount", tutorService.getTutorCount());
+        model.addAttribute("totalBookings", bookingService.getTotalBookingCount());
+        model.addAttribute("pendingBookings", bookingService.getOverallBookingCountByStatus("Pending"));
+        model.addAttribute("confirmedBookings", bookingService.getOverallBookingCountByStatus("Confirmed"));
+
         return "admin/dashboard";
     }
 
