@@ -339,10 +339,8 @@
             </div>
             <div class="col-6 col-lg-2 mb-5 mb-lg-0">
                 <h6 class="footer-heading">Quick Links</h6>
-                <a href="${pageContext.request.contextPath}/student/dashboard" class="footer-link">Dashboard</a>
-                <a href="${pageContext.request.contextPath}/student/view-tutors" class="footer-link">Find Tutors</a>
-                <a href="${pageContext.request.contextPath}/student/my-bookings" class="footer-link">My Bookings</a>
-                <a href="${pageContext.request.contextPath}/student/profile" class="footer-link">Profile</a>
+                <a href="${pageContext.request.contextPath}/admin/dashboard" class="footer-link">Dashboard</a>
+                <a href="${pageContext.request.contextPath}/admin/edit" class="footer-link">Edit</a>
             </div>
             <div class="col-lg-6">
                 <h6 class="footer-heading">Contact Us</h6>
