@@ -71,20 +71,25 @@
     </style>
 </head>
 <body>
-<nav class="navbar">
-    <span class="navbar-brand">
-        <i class="bi bi-shield-check me-2"></i>Admin Panel
-    </span>
-    <div class="ms-auto">
-        <span class="text-white me-3">
-            <i class="bi bi-person-circle me-1"></i>${sessionScope.adminName}
-        </span>
-        <a href="/admin/dashboard" class="btn btn-outline-light btn-sm me-2">
-            <i class="bi bi-speedometer2 me-1"></i>Dashboard
-        </a>
-        <a href="/admin/logout" class="btn btn-outline-light btn-sm">
-            <i class="bi bi-box-arrow-right me-1"></i>Logout
-        </a>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <span class="navbar-brand"><i class="bi bi-shield-check me-2"></i>Admin Panel</span>
+    <div class="ms-auto d-flex align-items-center gap-2">
+
+        <!-- Account Dropdown -->
+        <div class="dropdown">
+            <a href="#" class="text-white text-decoration-none dropdown-toggle" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-circle me-1"></i>${sessionScope.adminName}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+                <li><a class="dropdown-item" href="/admin/dashboard"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="/admin/delete" onclick="return confirm('Are you sure you want to delete your account? This cannot be undone.')"><i class="bi bi-trash me-2"></i>Delete Account</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/admin/logout"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+            </ul>
+        </div>
+
     </div>
 </nav>
 <div class="container py-4">
