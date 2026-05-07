@@ -19,6 +19,26 @@
         .section-title { color: #1a1a2e; font-weight: 700; border-left: 4px solid #0f3460; padding-left: 10px; margin: 2rem 0 1rem; }
         .table th { background: #f8f9fa; color: #1a1a2e; font-weight: 600; }
         .profile-avatar { width: 45px; height: 45px; background: #0f3460; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.1rem; }
+        .footer {
+            background: #0d1b2a;
+            color: rgba(255,255,255,0.7);
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+            border-top: 2px solid #00b4d8;
+        }
+        .footer-brand { color: #fff; font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem; display: block; text-decoration: none; }
+        .footer-link { color: rgba(255,255,255,0.6); text-decoration: none; transition: 0.3s; display: block; margin-bottom: 0.5rem; font-size: 0.85rem; }
+        .footer-link:hover { color: #00b4d8; }
+        .footer-heading { color: #fff; font-weight: 700; margin-bottom: 1.2rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px; opacity: 0.9; }
+        .footer-info-text { font-size: 0.85rem; line-height: 1.6; }
+        .footer-info-label { color: #fff; font-weight: 600; font-size: 0.8rem; margin-top: 1rem; margin-bottom: 0.2rem; display: block; opacity: 0.8; }
+        .social-icon {
+            width: 35px; height: 35px; background: rgba(255,255,255,0.1);
+            border-radius: 50%; display: inline-flex; align-items: center;
+            justify-content: center; color: #fff; margin-right: 10px; transition: 0.3s;
+        }
+        .social-icon:hover { background: #00b4d8; transform: translateY(-3px); }
+
     </style>
 </head>
 <body>
@@ -305,6 +325,40 @@
         </div>
     </div>
 </div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <a href="#" class="footer-brand">
+                    <i class="bi bi-mortarboard-fill me-2 text-info"></i>Tutor Booking
+                </a>
+                <p class="footer-info-text mb-0 opacity-50 small">
+                    This is a academic project developed for<br>
+                    <strong>SE1020 - OOP Module at SLIIT</strong> by Group WD204
+                </p>
+            </div>
+            <div class="col-6 col-lg-2 mb-5 mb-lg-0">
+                <h6 class="footer-heading">Quick Links</h6>
+                <a href="${pageContext.request.contextPath}/student/dashboard" class="footer-link">Dashboard</a>
+                <a href="${pageContext.request.contextPath}/student/view-tutors" class="footer-link">Find Tutors</a>
+                <a href="${pageContext.request.contextPath}/student/my-bookings" class="footer-link">My Bookings</a>
+                <a href="${pageContext.request.contextPath}/student/profile" class="footer-link">Profile</a>
+            </div>
+            <div class="col-lg-6">
+                <h6 class="footer-heading">Contact Us</h6>
+                <div class="footer-info-text">
+                    <span class="footer-info-label">Address</span>
+                    SLIIT, New Kandy Road, Malabe,<br>Colombo, Sri Lanka
+                    <p class="mt-2 text-info opacity-75 small italic mb-4">
+                        <i class="bi bi-info-circle me-1"></i> Meet at the university premises
+                    </p>
+                    <hr class="opacity-10">
+                    <p class="mb-0 opacity-50 small">&copy; 2026 WD204 | SLIIT | All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
