@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% request.setAttribute("activePage", "dashboard"); %>
 <% request.setAttribute("pageTitle", "Dashboard"); %>
@@ -29,6 +30,7 @@
 <!-- ── Stat Cards ── -->
 <div class="row g-3 mb-2">
     <div class="col-sm-6 col-xl-3">
+    <a href="/admin/tutors" class="text-decoration-none">
         <div class="card stat-card p-3">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -39,8 +41,10 @@
                 <i class="bi bi-person-badge" style="font-size:2.5rem;color:#dee2e6"></i>
             </div>
         </div>
+        </a>
     </div>
     <div class="col-sm-6 col-xl-3">
+    <a href="/admin/students" class="text-decoration-none">
         <div class="card stat-card p-3">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -51,8 +55,10 @@
                 <i class="bi bi-mortarboard" style="font-size:2.5rem;color:#dee2e6"></i>
             </div>
         </div>
+        </a>
     </div>
     <div class="col-sm-6 col-xl-3">
+    <a href="/admin/bookings" class="text-decoration-none">
         <div class="card stat-card p-3">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -63,8 +69,10 @@
                 <i class="bi bi-calendar-check" style="font-size:2.5rem;color:#dee2e6"></i>
             </div>
         </div>
+        </a>
     </div>
     <div class="col-sm-6 col-xl-3">
+    <a href="/admin/reviews" class="text-decoration-none">
         <div class="card stat-card p-3">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -75,28 +83,10 @@
                 <i class="bi bi-star" style="font-size:2.5rem;color:#dee2e6"></i>
             </div>
         </div>
+        </a>
     </div>
 </div>
 
-<!-- Quick links -->
-<div class="row g-3 mb-2">
-    <div class="col-12">
-        <div class="d-flex gap-2 flex-wrap">
-            <a href="/admin/tutors?status=pending" class="btn btn-sm btn-warning">
-                <i class="bi bi-patch-exclamation me-1"></i>${pendingTutors} Tutors Pending Approval
-            </a>
-            <a href="/admin/tutors" class="btn btn-sm btn-outline-primary">
-                <i class="bi bi-person-badge me-1"></i>Manage Tutors
-            </a>
-            <a href="/admin/students" class="btn btn-sm btn-outline-primary">
-                <i class="bi bi-mortarboard me-1"></i>Manage Students
-            </a>
-            <a href="/admin/reviews" class="btn btn-sm btn-outline-primary">
-                <i class="bi bi-star me-1"></i>Manage Reviews
-            </a>
-        </div>
-    </div>
-</div>
 
 <!-- ── Charts ── -->
 <h6 class="section-title"><i class="bi bi-bar-chart-line me-2"></i>Analytics Overview</h6>

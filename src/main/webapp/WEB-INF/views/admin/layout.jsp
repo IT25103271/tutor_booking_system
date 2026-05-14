@@ -1,9 +1,4 @@
-<%-- ============================================================
-     layout.jsp  —  Include at top of every admin page
-     Usage:  <%@ include file="layout.jsp" %>
-     Requires: pageContext attribute "activePage" set before include
-     e.g.  <% request.setAttribute("activePage","tutors"); %>
-============================================================ --%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -206,7 +201,7 @@
             <a href="/admin/bookings"
                class="${activePage == 'bookings' ? 'active' : ''}"
                data-label="Bookings">
-                <i class="bi bi-person-badge"></i>
+                <i class="bi bi-calendar-check"></i>
                 <span class="nav-label">Bookings</span>
             </a>
         </li>

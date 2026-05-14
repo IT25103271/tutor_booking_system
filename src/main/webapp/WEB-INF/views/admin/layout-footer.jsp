@@ -1,10 +1,5 @@
-<%-- ============================================================
-     layout-footer.jsp  —  Include at bottom of every admin page
-     Usage:  <%@ include file="layout-footer.jsp" %>
-============================================================ --%>
-
-</div><!-- /main-content -->
-
+</div>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <!-- ══════════ FOOTER ══════════ -->
 <footer style="margin-left:var(--sidebar-width);background:#0d1b2a;color:rgba(255,255,255,0.6);padding:2rem 1.75rem 1.5rem;border-top:2px solid #00b4d8;transition:margin-left 0.25s ease;" id="footer">
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
