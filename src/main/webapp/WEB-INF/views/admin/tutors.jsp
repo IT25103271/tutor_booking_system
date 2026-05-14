@@ -79,6 +79,7 @@
                     <th>Rate</th>
                     <th>Rating</th>
                     <th>Status</th>
+                    <th>Verify</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -122,6 +123,14 @@
                                 <span class="text-muted small">✓ Verified</span>
                             </c:if>
                         </td>
+                        <td>
+    <form method="post" action="/admin/tutors/${t.id}/delete"
+          onsubmit="return confirm('Delete this tutor?')">
+        <button class="btn btn-sm btn-outline-danger">
+            <i class="bi bi-trash"></i>
+        </button>
+    </form>
+</td>
                     </tr>
                 </c:forEach>
                 <c:if test="${empty tutors}">

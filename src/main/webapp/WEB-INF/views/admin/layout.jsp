@@ -202,6 +202,14 @@
                 <span class="nav-label">Reviews</span>
             </a>
         </li>
+        <li>
+            <a href="/admin/bookings"
+               class="${activePage == 'bookings' ? 'active' : ''}"
+               data-label="Bookings">
+                <i class="bi bi-person-badge"></i>
+                <span class="nav-label">Bookings</span>
+            </a>
+        </li>
         <li class="sb-divider"></li>
         <li>
             <a href="/admin/edit"

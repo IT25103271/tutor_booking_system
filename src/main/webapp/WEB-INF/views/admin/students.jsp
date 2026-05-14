@@ -68,6 +68,7 @@
                     <th>Grade Level</th>
                     <th>Subjects Needed</th>
                     <th>Membership</th>
+                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody id="studentTbody">
@@ -95,6 +96,15 @@
                                 </c:otherwise>
                             </c:choose>
                         </td>
+                        <td>
+    <form method="post" action="/admin/students/${s.id}/delete"
+          onsubmit="return confirm('Delete this student?')">
+        <button class="btn btn-sm btn-outline-danger">
+            <i class="bi bi-trash"></i>
+        </button>
+    </form>
+</td>
+
                     </tr>
                 </c:forEach>
                 <c:if test="${empty students}">
