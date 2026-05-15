@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Dashboard</title>
+    <title>Manage Subjects | Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <style>
@@ -10,69 +10,28 @@
         .navbar { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 1rem 2rem; border-bottom: 2px solid #e94560; }
         .navbar-brand { color: white; font-weight: 700; }
         .card { border: none; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .profile-header { 
+        .page-header { 
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
             color: #fff; 
             border-radius: 15px; 
-            padding: 3rem 2rem; 
+            padding: 2rem; 
             margin-bottom: 2rem; 
-            position: relative;
-            overflow: hidden;
             border-bottom: 4px solid #e94560;
         }
-        .profile-avatar { 
-            width: 100px; 
-            height: 100px; 
-            border-radius: 50%; 
-            background: rgba(255,255,255,0.1); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 2.5rem; 
-            font-weight: 700; 
-            border: 4px solid #e94560; 
-        }
-        .stat-card {
-            background: #fff;
-            border-radius: 15px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            height: 100%;
-            border-left: 5px solid transparent;
-        }
-        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .stat-value { font-size: 1.8rem; font-weight: 800; color: #1a1a2e; }
-        .stat-label { font-size: 0.85rem; color: #6c757d; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .students-card { border-left-color: #4361ee; }
-        .tutors-card { border-left-color: #4cc9f0; }
-        .bookings-card { border-left-color: #f72585; }
-        .pending-card { border-left-color: #ff9f1c; }
-        
-        .info-box {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            border: 1px solid #eee;
-        }
-        .info-label { font-size: 0.75rem; text-transform: uppercase; color: #6c757d; font-weight: 700; margin-bottom: 5px; }
-        .info-value { font-size: 1rem; font-weight: 600; color: #1a1a2e; }
-        
-        .btn-custom { border-radius: 10px; padding: 0.7rem 1.5rem; font-weight: 600; transition: 0.3s; }
+        .btn-custom { border-radius: 10px; padding: 0.6rem 1.2rem; font-weight: 600; transition: 0.3s; }
         .btn-dark-navy { background: #1a1a2e; color: #fff; border: none; }
         .btn-dark-navy:hover { background: #16213e; color: #fff; transform: translateY(-2px); }
-        
+        .search-box { border-radius: 10px; border: 1px solid #dee2e6; padding: 0.6rem 1rem; }
+        .table { border-collapse: separate; border-spacing: 0 10px; }
+        .table thead th { border: none; color: #6c757d; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; padding: 1rem; }
+        .table tbody tr { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.02); border-radius: 10px; transition: 0.3s; }
+        .table tbody tr:hover { transform: scale(1.01); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .table tbody td { padding: 1.2rem 1rem; vertical-align: middle; border: none; }
+        .table tbody td:first-child { border-top-left-radius: 10px; border-bottom-left-radius: 10px; }
+        .table tbody td:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10px; }
+        .status-badge { border-radius: 20px; padding: 0.4rem 1rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .badge-active { background: #d1fae5; color: #065f46; }
+        .badge-inactive { background: #fee2e2; color: #991b1b; }
         .footer {
             background: #1a1a2e;
             color: rgba(255,255,255,0.7);
@@ -161,141 +120,91 @@
 </nav>
 
 <div class="container py-5">
-    <div class="profile-header shadow-lg">
-        <div class="d-flex align-items-center gap-4">
-            <div class="profile-avatar">${admin.name.charAt(0)}</div>
-            <div>
-                <p class="small text-white-50 mb-1">Administrator Control Panel</p>
-                <h1 class="fw-bold mb-2" style="font-size: 2.5rem;">${admin.name}</h1>
-                <div class="d-flex align-items-center gap-3">
-                    <span class="badge bg-danger rounded-pill px-3 py-2" style="font-size: 0.7rem;">
-                        <i class="bi bi-shield-fill-check me-1"></i> SUPER ADMIN
-                    </span>
-                    <span class="text-white opacity-75 small">
-                        <i class="bi bi-envelope-fill me-1"></i> ${admin.email}
-                    </span>
-                </div>
-            </div>
+    <div class="page-header d-flex justify-content-between align-items-center shadow-lg">
+        <div>
+            <p class="small text-white-50 mb-1">System Management</p>
+            <h1 class="fw-bold mb-0">Manage Subjects</h1>
         </div>
+        <a href="${pageContext.request.contextPath}/subject/add" class="btn btn-light btn-custom">
+            <i class="bi bi-plus-circle-fill me-2"></i>Add New Subject
+        </a>
     </div>
 
-    <!-- Stats Section -->
-    <div class="row g-4 mb-5">
-        <div class="col-md-3">
-            <div class="stat-card students-card shadow-sm">
-                <div class="stat-icon bg-primary bg-opacity-10 text-primary">
-                    <i class="bi bi-people-fill"></i>
-                </div>
-                <div class="stat-value">${studentCount}</div>
-                <div class="stat-label">Total Students</div>
-            </div>
+    <c:if test="${not empty message}">
+        <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-4 mb-4" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <div class="col-md-3">
-            <div class="stat-card tutors-card shadow-sm">
-                <div class="stat-icon bg-info bg-opacity-10 text-info">
-                    <i class="bi bi-person-workspace"></i>
+    </c:if>
+
+    <div class="card p-4 shadow-sm mb-4">
+        <form action="${pageContext.request.contextPath}/subject/search" method="get" class="row g-3">
+            <div class="col-md-10">
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 search-box">
+                        <i class="bi bi-search text-muted"></i>
+                    </span>
+                    <input type="text" name="q" class="form-control border-start-0 search-box" placeholder="Search by name, category or grade..." value="${keyword}">
                 </div>
-                <div class="stat-value">${tutorCount}</div>
-                <div class="stat-label">Total Tutors</div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="stat-card bookings-card shadow-sm">
-                <div class="stat-icon bg-danger bg-opacity-10 text-danger">
-                    <i class="bi bi-calendar-check-fill"></i>
-                </div>
-                <div class="stat-value">${totalBookings}</div>
-                <div class="stat-label">Total Bookings</div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-dark-navy w-100 btn-custom">Search</button>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="stat-card pending-card shadow-sm">
-                <div class="stat-icon bg-warning bg-opacity-10 text-warning">
-                    <i class="bi bi-hourglass-split"></i>
-                </div>
-                <div class="stat-value">${pendingBookings}</div>
-                <div class="stat-label">Pending Approval</div>
-            </div>
-        </div>
+        </form>
     </div>
 
-    <div class="row g-4">
-        <div class="col-lg-8">
-            <div class="card p-4 h-100">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="fw-bold mb-0" style="color: #1a1a2e">
-                        <i class="bi bi-gear-fill me-2 text-primary"></i> System Management
-                    </h4>
-                </div>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <div class="card p-3 border h-100 text-center">
-                            <i class="bi bi-people display-6 text-primary mb-3"></i>
-                            <h6>Manage Students</h6>
-                            <p class="small text-muted">View and manage registered student accounts.</p>
-                            <a href="#" class="btn btn-outline-primary btn-sm mt-auto">View All</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card p-3 border h-100 text-center">
-                            <i class="bi bi-person-badge display-6 text-info mb-3"></i>
-                            <h6>Manage Tutors</h6>
-                            <p class="small text-muted">Review tutor applications and manage profiles.</p>
-                            <a href="#" class="btn btn-outline-info btn-sm mt-auto">View All</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card p-3 border h-100 text-center">
-                            <i class="bi bi-book display-6 text-success mb-3"></i>
-                            <h6>Manage Subjects</h6>
-                            <p class="small text-muted">Add, edit or remove subjects offered by tutors.</p>
-                            <a href="${pageContext.request.contextPath}/subject/list" class="btn btn-outline-success btn-sm mt-auto">Manage Now</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card p-3 border h-100 text-center">
-                            <i class="bi bi-calendar-event display-6 text-danger mb-3"></i>
-                            <h6>Booking Reports</h6>
-                            <p class="small text-muted">Generate and view all session reports.</p>
-                            <a href="#" class="btn btn-outline-danger btn-sm mt-auto">View Reports</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="card p-4 h-100">
-                <h4 class="fw-bold mb-4" style="color: #1a1a2e">
-                    <i class="bi bi-person-circle me-2 text-danger"></i> Profile Info
-                </h4>
-                <div class="info-box">
-                    <div class="info-label">Full Name</div>
-                    <div class="info-value">${admin.name}</div>
-                </div>
-                <div class="info-box">
-                    <div class="info-label">Email Address</div>
-                    <div class="info-value">${admin.email}</div>
-                </div>
-                <div class="info-box">
-                    <div class="info-label">Phone Number</div>
-                    <div class="info-value">${admin.phone}</div>
-                </div>
-                <div class="info-box">
-                    <div class="info-label">Admin Role</div>
-                    <div class="info-value">${admin.role}</div>
-                </div>
-                <div class="d-flex gap-2 mt-4">
-                    <a href="${pageContext.request.contextPath}/admin/edit" class="btn btn-dark-navy w-100 btn-custom">
-                        <i class="bi bi-pencil-square me-2"></i>Edit
-                    </a>
-                    <form method="post" action="${pageContext.request.contextPath}/admin/delete" class="w-100" onsubmit="return confirm('Delete admin account?')">
-                        <button type="submit" class="btn btn-outline-danger w-100 btn-custom">
-                            <i class="bi bi-trash me-2"></i>Delete
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Subject Name</th>
+                    <th>Category</th>
+                    <th>Grade Level</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="subject" items="${subjects}">
+                    <tr>
+                        <td><span class="fw-bold text-muted">#${subject.id}</span></td>
+                        <td>
+                            <div class="fw-bold text-dark">${subject.subjectName}</div>
+                            <div class="small text-muted text-truncate" style="max-width: 200px;">${subject.description}</div>
+                        </td>
+                        <td><span class="badge bg-light text-dark border">${subject.category}</span></td>
+                        <td><span class="badge bg-info bg-opacity-10 text-info">${subject.gradeLevel}</span></td>
+                        <td>
+                            <span class="status-badge ${subject.status == 'Active' ? 'badge-active' : 'badge-inactive'}">
+                                ${subject.status}
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <div class="btn-group">
+                                <a href="${pageContext.request.contextPath}/subject/edit?id=${subject.id}" class="btn btn-sm btn-outline-primary rounded-start-pill px-3">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <a href="${pageContext.request.contextPath}/subject/delete?id=${subject.id}" 
+                                   class="btn btn-sm btn-outline-danger rounded-end-pill px-3"
+                                   onclick="return confirm('Are you sure you want to delete this subject?')">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </c:forEach>
+                <c:if test="${empty subjects}">
+                    <tr>
+                        <td colspan="6" class="text-center py-5">
+                            <i class="bi bi-inbox display-4 text-muted mb-3 d-block"></i>
+                            <p class="text-muted">No subjects found matching your search.</p>
+                            <a href="${pageContext.request.contextPath}/subject/list" class="btn btn-sm btn-outline-secondary mt-2">Clear Search</a>
+                        </td>
+                    </tr>
+                </c:if>
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -357,7 +266,5 @@
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
 </body>
 </html>

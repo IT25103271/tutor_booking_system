@@ -149,6 +149,10 @@
                         <i class="bi bi-speedometer2"></i> Dashboard
                     </a>
                     <div class="sidebar-divider"></div>
+                    <a href="${pageContext.request.contextPath}/student/view-subjects" class="sidebar-link">
+                        <i class="bi bi-book"></i> Browse Subjects
+                    </a>
+                    <div class="sidebar-divider"></div>
                     <a href="${pageContext.request.contextPath}/student/view-tutors" class="sidebar-link active">
                         <i class="bi bi-search"></i> View Tutors
                     </a>

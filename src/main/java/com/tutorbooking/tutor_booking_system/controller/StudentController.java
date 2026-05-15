@@ -1,6 +1,9 @@
 package com.tutorbooking.tutor_booking_system.controller;
 
 import com.tutorbooking.tutor_booking_system.model.Student;
+import com.tutorbooking.tutor_booking_system.model.Tutor;
+import com.tutorbooking.tutor_booking_system.repository.SubjectRepository;
+import com.tutorbooking.tutor_booking_system.repository.TutorRepository;
 import com.tutorbooking.tutor_booking_system.service.BookingService;
 import com.tutorbooking.tutor_booking_system.service.StudentService;
 import jakarta.servlet.http.HttpSession;
@@ -19,6 +22,12 @@ public class StudentController {
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private TutorRepository tutorRepository;
+
+    @Autowired
+    private SubjectRepository subjectRepository;
 
     @GetMapping("/register")
     public String registerPage() {
@@ -117,6 +126,29 @@ public class StudentController {
         return "redirect:/student/profile";
     }
 
+    @GetMapping("/view-tutors")
+    public String viewTutors(Model model, HttpSession session) {
+        if (session.getAttribute("studentId") == null) return "redirect:/student/login";
+        model.addAttribute("tutors", tutorRepository.findAll());
+        return "student/view-tutors";
+    }
+
+    @GetMapping("/my-bookings")
+    public String myBookings(Model model, HttpSession session) {
+        Long studentId = (Long) session.getAttribute("studentId");
+        if (studentId == null) return "redirect:/student/login";
+        Student student = studentService.getStudentById(studentId);
+        model.addAttribute("bookings", bookingService.getBookingsByStudentAndStatus(student, "Confirmed"));
+        return "student/my-bookings";
+    }
+
+    @GetMapping("/view-subjects")
+    public String viewSubjects(Model model, HttpSession session) {
+        if (session.getAttribute("studentId") == null) return "redirect:/student/login";
+        model.addAttribute("subjects", subjectRepository.findAll());
+        return "student/view-subjects";
+    }
+
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
@@ -132,5 +164,15 @@ public class StudentController {
             ra.addFlashAttribute("success", "Account deleted successfully.");
         }
         return "redirect:/student/login";
+    }
+
+    @GetMapping("/book-tutor")
+    public String bookTutor(@RequestParam Long id, HttpSession session, Model model) {
+        if (session.getAttribute("studentId") == null) {
+            return "redirect:/student/login";
+        }
+        Tutor tutor = tutorRepository.findById(id).orElse(null);
+        model.addAttribute("tutor", tutor);
+        return "student/book-tutor";
     }
 }

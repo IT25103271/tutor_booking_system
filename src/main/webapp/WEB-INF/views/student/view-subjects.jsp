@@ -2,110 +2,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Student Dashboard</title>
+    <title>Available Subjects | Student Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         body { background: #f0f2f5; font-family: 'Segoe UI', sans-serif; }
         .navbar { background: linear-gradient(135deg, #0d1b2a, #1b263b); padding: 1rem 2rem; }
         .navbar-brand { color: white; font-weight: 700; }
-        .card { border: none; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .profile-header { 
-            background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%); 
-            color: #fff; 
-            border-radius: 15px; 
-            padding: 3.5rem 2.5rem; 
-            margin-bottom: 2rem; 
-            position: relative;
-            overflow: hidden;
-        }
-        .avatar-container { position: relative; width: fit-content; }
-        .profile-avatar { 
-            width: 110px; 
-            height: 110px; 
-            border-radius: 50%; 
-            background: rgba(255,255,255,0.15); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 3rem; 
-            font-weight: 700; 
-            border: 4px solid #fff; 
-        }
-        .action-card {
-            border: none;
-            border-radius: 20px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            overflow: hidden;
-            background: #fff;
-            position: relative;
-        }
-        .action-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-        }
-        .action-card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 4px;
-            background: linear-gradient(90deg, #0d1b2a, #00b4d8);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-        .action-card:hover::after {
-            transform: scaleX(1);
-        }
-        .action-icon {
-            width: 60px;
-            height: 60px;
-            background: #f8f9fa;
-            border-radius: 15px;
+        .card { border: none; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .subject-icon {
+            width: 50px;
+            height: 50px;
+            background: #e9f5ff;
+            color: #0d6efd;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
-            color: #0d1b2a;
-            margin-bottom: 1.5rem;
-            transition: 0.3s;
-        }
-        .action-card:hover .action-icon {
-            background: #0d1b2a;
-            color: #fff;
-            transform: rotate(-10deg);
-        }
-        .camera-overlay {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            background: #00b4d8;
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            border: 3px solid #0d1b2a;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-        .camera-overlay:hover { background: #0077b6; transform: scale(1.1); }
-        .info-label { font-size: 0.8rem; text-transform: uppercase; color: #6c757d; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 4px; }
-        .info-value { font-size: 1.1rem; font-weight: 500; color: #0d1b2a; }
-        .btn-custom { border-radius: 10px; padding: 0.7rem 1.5rem; font-weight: 600; transition: 0.3s; }
-        .btn-dark-navy { background: #0d1b2a; color: #fff; }
-        .btn-dark-navy:hover { background: #1b263b; color: #fff; }
-        .badge-role {
-            color: #fff;
-            background: #00b4d8;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            margin-bottom: 1rem;
         }
         .sidebar-link { 
             display: flex; 
@@ -121,7 +37,6 @@
             background: #f8f9fa; 
             color: #0d1b2a; 
             border-left: 4px solid #778da9;
-            padding-left: 25px;
         }
         .sidebar-link.active { 
             background: #0d1b2a !important; 
@@ -130,18 +45,6 @@
             border-left: 4px solid #00b4d8; 
         }
         .sidebar-link i { margin-right: 12px; font-size: 1.2rem; }
-        .sidebar-divider { height: 1px; background: #eee; margin: 5px 0; }
-        .action-card {
-            transition: all 0.3s ease;
-            border-bottom: 4px solid transparent !important;
-        }
-        .action-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
-            border-bottom: 4px solid #00b4d8 !important;
-        }
-        .action-card i { transition: transform 0.3s ease; }
-        .action-card:hover i { transform: scale(1.2); }
         .footer {
             background: #0d1b2a;
             color: rgba(255,255,255,0.7);
@@ -155,12 +58,6 @@
         .footer-heading { color: #fff; font-weight: 700; margin-bottom: 1.2rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px; opacity: 0.9; }
         .footer-info-text { font-size: 0.85rem; line-height: 1.6; }
         .footer-info-label { color: #fff; font-weight: 600; font-size: 0.8rem; margin-top: 1rem; margin-bottom: 0.2rem; display: block; opacity: 0.8; }
-        .social-icon { 
-            width: 35px; height: 35px; background: rgba(255,255,255,0.1); 
-            border-radius: 50%; display: inline-flex; align-items: center; 
-            justify-content: center; color: #fff; margin-right: 10px; transition: 0.3s;
-        }
-        .social-icon:hover { background: #00b4d8; transform: translateY(-3px); }
     </style>
 </head>
 <body>
@@ -252,12 +149,12 @@
     <div class="container py-5">
         <div class="row">
             <div class="col-lg-3">
-                <div class="card p-0 overflow-hidden mb-4">
-                    <a href="${pageContext.request.contextPath}/student/dashboard" class="sidebar-link active">
+                <div class="card p-0 overflow-hidden mb-4 border-0 shadow-sm">
+                    <a href="${pageContext.request.contextPath}/student/dashboard" class="sidebar-link">
                         <i class="bi bi-speedometer2"></i> Dashboard
                     </a>
                     <div class="sidebar-divider"></div>
-                    <a href="${pageContext.request.contextPath}/student/view-subjects" class="sidebar-link">
+                    <a href="${pageContext.request.contextPath}/student/view-subjects" class="sidebar-link active">
                         <i class="bi bi-book"></i> Browse Subjects
                     </a>
                     <div class="sidebar-divider"></div>
@@ -271,63 +168,36 @@
                 </div>
             </div>
             <div class="col-lg-9">
-                <div class="profile-header shadow-lg">
-                    <div class="d-flex align-items-center gap-4">
-                        <div class="avatar-container">
-                            <div class="profile-avatar">${student.name.charAt(0)}</div>
-                            <div class="camera-overlay" title="Upload Photo">
-                                <i class="bi bi-camera-fill"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <p class="small text-white-50 mb-1">Welcome back,</p>
-                            <h1 class="fw-bold mb-2" style="font-size: 2.5rem;">${student.name}</h1>
-                            <div class="d-flex align-items-center gap-3 mb-3">
-                                <span class="badge-role">
-                                    <i class="bi bi-mortarboard-fill me-2"></i> STUDENT
-                                </span>
-                                <c:if test="${not empty sessionScope.lastLoginTime}">
-                                    <span class="text-white opacity-75 small">
-                                        <i class="bi bi-clock-history me-1"></i> Last login: ${sessionScope.lastLoginTime.toString().replace('T', ' ').substring(0, 16)}
-                                    </span>
-                                </c:if>
-                            </div>
-                            <p class="mb-0 opacity-75">Manage your tutoring sessions and discover new learning opportunities.</p>
-                        </div>
-                    </div>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold text-dark">Available Subjects</h2>
+                    <span class="badge bg-primary rounded-pill px-3">${subjects.size()} Subjects Found</span>
                 </div>
 
                 <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="card p-4 h-100 text-center action-card">
-                            <div class="mb-3">
-                                <i class="bi bi-search text-primary display-4"></i>
+                    <c:forEach var="subject" items="${subjects}">
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card h-100 p-4">
+                                <div class="subject-icon">
+                                    <i class="bi bi-journal-text"></i>
+                                </div>
+                                <h5 class="fw-bold mb-1">${subject.subjectName}</h5>
+                                <div class="mb-2">
+                                    <span class="badge bg-light text-dark border">${subject.category}</span>
+                                    <span class="badge bg-info bg-opacity-10 text-info">${subject.gradeLevel}</span>
+                                </div>
+                                <p class="text-muted small mb-4">${subject.description}</p>
+                                <a href="${pageContext.request.contextPath}/student/view-tutors?subject=${subject.subjectName}" class="btn btn-outline-primary btn-sm w-100 mt-auto">
+                                    Find Tutors for this Subject
+                                </a>
                             </div>
-                            <h4 class="fw-bold">Find a Tutor</h4>
-                            <p class="text-muted small">Browse expert tutors and find the perfect match.</p>
-                            <a href="${pageContext.request.contextPath}/student/view-tutors" class="btn btn-dark-navy mt-auto">Browse Tutors</a>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card p-4 h-100 text-center action-card">
-                            <div class="mb-3">
-                                <i class="bi bi-book text-info display-4"></i>
-                            </div>
-                            <h4 class="fw-bold">Browse Subjects</h4>
-                            <p class="text-muted small">Explore various subjects offered by our tutors.</p>
-                            <a href="${pageContext.request.contextPath}/student/view-subjects" class="btn btn-dark-navy mt-auto">View Subjects</a>
+                    </c:forEach>
+                    <c:if test="${empty subjects}">
+                        <div class="col-12 text-center py-5">
+                            <i class="bi bi-inbox display-1 text-muted opacity-25"></i>
+                            <p class="mt-3 text-muted">No subjects are currently listed in the system.</p>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card p-4 h-100 text-center action-card">
-                            <div class="mb-3">
-                                <i class="bi bi-calendar-check text-success display-4"></i>
-                            </div>
-                            <h4 class="fw-bold">My Bookings</h4>
-                            <p class="text-muted small">View and manage your upcoming tutoring sessions.</p>
-                            <a href="${pageContext.request.contextPath}/student/my-bookings" class="btn btn-dark-navy mt-auto">View Bookings</a>
-                        </div>
-                    </div>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -370,23 +240,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const now = new Date();
-            const hours = now.getHours();
-            let greeting = 'Welcome';
-            
-            if (hours >= 5 && hours < 12) {
-                greeting = 'Good Morning';
-            } else if (hours >= 12 && hours < 17) {
-                greeting = 'Good Afternoon';
-            } else if (hours >= 17 && hours < 21) {
-                greeting = 'Good Evening';
-            } else {
-                greeting = 'Good Night';
-            }
-            
-            const greetingElement = document.getElementById('timeGreeting');
-            if (greetingElement) greetingElement.innerText = greeting;
-
             // Notification persistence logic
             const readNotifications = JSON.parse(localStorage.getItem('readNotifications') || '[]');
             readNotifications.forEach(id => {
@@ -417,7 +270,6 @@
                 }
                 
                 updateBadgeCount();
-                checkEmptyNotifs();
             }, 300);
         }
 
@@ -438,7 +290,6 @@
             
             setTimeout(() => {
                 updateBadgeCount();
-                checkEmptyNotifs();
             }, 400);
         }
 
@@ -454,14 +305,6 @@
             } else {
                 badge.innerText = count;
                 badge.classList.remove('d-none');
-            }
-        }
-
-        function checkEmptyNotifs() {
-            const items = document.querySelectorAll('.notification-item:not(.d-none)');
-            const container = document.getElementById('notifDropdown')?.nextElementSibling;
-            if (items.length === 0 && container) {
-                // You could add a "No new notifications" message here if desired
             }
         }
     </script>
