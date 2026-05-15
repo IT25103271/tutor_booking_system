@@ -1,0 +1,5 @@
+com/tutorsystem/HomeController.class
+com/tutorsystem/controller/SubjectController.class
+com/tutorsystem/repository/SubjectRepository.class
+com/tutorsystem/TutorSystemApplication.class
+com/tutorsystem/model/Subject.class
