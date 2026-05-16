@@ -1,16 +1,27 @@
 package com.tutorbooking.tutor_booking_system.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class Schedule {
+    @Id
     private String scheduleId;
-    private String tutorId;
+    
+    @ManyToOne
+    @JoinColumn(name = "tutor_id")
+    private Tutor tutor;
+    
     private String availableDate;
     private String timeSlot;
 
     public Schedule() {}
 
-    public Schedule(String scheduleId, String tutorId, String availableDate, String timeSlot) {
+    public Schedule(String scheduleId, Tutor tutor, String availableDate, String timeSlot) {
         this.scheduleId = scheduleId;
-        this.tutorId = tutorId;
+        this.tutor = tutor;
         this.availableDate = availableDate;
         this.timeSlot = timeSlot;
     }
@@ -19,23 +30,13 @@ public class Schedule {
     public String getScheduleId() { return scheduleId; }
     public void setScheduleId(String scheduleId) { this.scheduleId = scheduleId; }
 
-    public String getTutorId() { return tutorId; }
-    public void setTutorId(String tutorId) { this.tutorId = tutorId; }
+    public Tutor getTutor() { return tutor; }
+    public void setTutor(Tutor tutor) { this.tutor = tutor; }
 
     public String getAvailableDate() { return availableDate; }
     public void setAvailableDate(String availableDate) { this.availableDate = availableDate; }
 
     public String getTimeSlot() { return timeSlot; }
     public void setTimeSlot(String timeSlot) { this.timeSlot = timeSlot; }
-
-    @Override
-    public String toString() {
-        return scheduleId + "|" + tutorId + "|" + availableDate + "|" + timeSlot;
-    }
-
-    public static Schedule fromString(String line) {
-        String[] parts = line.split("\\|");
-        if (parts.length < 4) return null;
-        return new Schedule(parts[0], parts[1], parts[2], parts[3]);
-    }
 }
+

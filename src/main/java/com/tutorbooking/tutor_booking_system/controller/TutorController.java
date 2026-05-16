@@ -139,7 +139,7 @@ public class TutorController {
         Tutor tutor = (Tutor) session.getAttribute("loggedInTutor");
         if (tutor == null) return "redirect:/login";
 
-        schedule.setTutorId(tutor.getTutorId());
+        schedule.setTutor(tutor);
         if (scheduleService.addSchedule(schedule)) {
             return "redirect:/tutor/schedule?added=true";
         } else {

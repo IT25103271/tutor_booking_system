@@ -1,7 +1,13 @@
 package com.tutorbooking.tutor_booking_system.model;
 
+import jakarta.persistence.*;
+import java.util.List;
+
+@Entity
 public class Tutor {
+    @Id
     private String tutorId;
+    
     private String fullName;
     private String email;
     private String phoneNumber;
@@ -11,8 +17,14 @@ public class Tutor {
     private String hourlyRate;
     private String availableDays;
     private String availableTime;
+    
+    @Column(length = 2000)
     private String aboutTutor;
+    
     private String password;
+
+    @OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL)
+    private List<Schedule> schedules;
 
     public Tutor() {}
 
@@ -70,17 +82,7 @@ public class Tutor {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
-    @Override
-    public String toString() {
-        return tutorId + "|" + fullName + "|" + email + "|" + phoneNumber + "|" + subject + "|" + 
-               qualification + "|" + experience + "|" + hourlyRate + "|" + availableDays + "|" + 
-               availableTime + "|" + aboutTutor + "|" + password;
-    }
-
-    public static Tutor fromString(String line) {
-        String[] parts = line.split("\\|");
-        if (parts.length < 12) return null;
-        return new Tutor(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], 
-                         parts[6], parts[7], parts[8], parts[9], parts[10], parts[11]);
-    }
+    public List<Schedule> getSchedules() { return schedules; }
+    public void setSchedules(List<Schedule> schedules) { this.schedules = schedules; }
 }
+
