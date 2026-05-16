@@ -205,6 +205,14 @@
                 <span class="nav-label">Bookings</span>
             </a>
         </li>
+        <li>
+            <a href="/subject/list"
+               class="${activePage == 'subjects' ? 'active' : ''}"
+               data-label="Subjects">
+                <i class="bi bi-calendar-check"></i>
+                <span class="nav-label">Subjects</span>
+            </a>
+        </li>
         <li class="sb-divider"></li>
         <li>
             <a href="/admin/edit"
