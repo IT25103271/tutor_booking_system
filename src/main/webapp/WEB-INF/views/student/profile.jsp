@@ -281,9 +281,13 @@
     <div class="container py-5">
         <div class="row">
             <div class="col-lg-3">
-                <div class="card p-0 overflow-hidden mb-4">
+                <div class="card p-0 overflow-hidden mb-4 border-0 shadow-sm">
                     <a href="${pageContext.request.contextPath}/student/dashboard" class="sidebar-link">
                         <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                    <div class="sidebar-divider"></div>
+                    <a href="${pageContext.request.contextPath}/student/view-subjects" class="sidebar-link">
+                        <i class="bi bi-book"></i> Browse Subjects
                     </a>
                     <div class="sidebar-divider"></div>
                     <a href="${pageContext.request.contextPath}/student/view-tutors" class="sidebar-link">

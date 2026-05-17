@@ -175,4 +175,11 @@ public class StudentController {
         model.addAttribute("tutor", tutor);
         return "student/book-tutor";
     }
+
+    @GetMapping("/list")
+    public String listStudents(Model model) {
+        model.addAttribute("students", studentService.getAllStudents());
+        model.addAttribute("totalStudents", studentService.countAll());
+        return "student/list"; 
+    }
 }

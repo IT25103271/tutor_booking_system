@@ -41,6 +41,14 @@ public class StudentService {
         return studentRepository.existsByEmail(email);
     }
 
+    public long countAll() {
+        return studentRepository.count();
+    }
+
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
+
     public long getStudentCount() {
         return studentRepository.count();
     }
