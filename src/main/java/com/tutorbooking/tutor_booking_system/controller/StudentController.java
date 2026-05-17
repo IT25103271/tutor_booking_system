@@ -2,10 +2,12 @@ package com.tutorbooking.tutor_booking_system.controller;
 
 import com.tutorbooking.tutor_booking_system.model.Student;
 import com.tutorbooking.tutor_booking_system.model.Tutor;
+import com.tutorbooking.tutor_booking_system.model.Booking;
 import com.tutorbooking.tutor_booking_system.repository.SubjectRepository;
 import com.tutorbooking.tutor_booking_system.repository.TutorRepository;
 import com.tutorbooking.tutor_booking_system.service.BookingService;
 import com.tutorbooking.tutor_booking_system.service.StudentService;
+import com.tutorbooking.tutor_booking_system.service.ReviewService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,9 @@ public class StudentController {
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     @Autowired
     private TutorRepository tutorRepository;
@@ -138,7 +143,7 @@ public class StudentController {
         Long studentId = (Long) session.getAttribute("studentId");
         if (studentId == null) return "redirect:/student/login";
         Student student = studentService.getStudentById(studentId);
-        model.addAttribute("bookings", bookingService.getBookingsByStudentAndStatus(student, "Confirmed"));
+        model.addAttribute("bookings", bookingService.getBookingsByStudent(student));
         return "student/my-bookings";
     }
 
@@ -166,14 +171,113 @@ public class StudentController {
         return "redirect:/student/login";
     }
 
+    @GetMapping("/book/{tutorId}")
+    public String bookTutorPage(@PathVariable Long tutorId, HttpSession session, Model model) {
+        Long studentId = (Long) session.getAttribute("studentId");
+        if (studentId == null) {
+            return "redirect:/student/login";
+        }
+        Tutor tutor = tutorRepository.findById(tutorId).orElse(null);
+        Student student = studentService.getStudentById(studentId);
+        model.addAttribute("tutor", tutor);
+        model.addAttribute("student", student);
+        return "student/book-tutor";
+    }
+
     @GetMapping("/book-tutor")
     public String bookTutor(@RequestParam Long id, HttpSession session, Model model) {
+        return bookTutorPage(id, session, model);
+    }
+
+    @PostMapping("/book")
+    public String makeBooking(@RequestParam Long tutorId,
+                              @RequestParam String date,
+                              @RequestParam String timeSlot,
+                              @RequestParam(required = false) String notes,
+                              HttpSession session,
+                              RedirectAttributes ra) {
+        Long studentId = (Long) session.getAttribute("studentId");
+        if (studentId == null) {
+            return "redirect:/student/login";
+        }
+        
+        Student student = studentService.getStudentById(studentId);
+        Tutor tutor = tutorRepository.findById(tutorId).orElse(null);
+        
+        if (tutor == null) {
+            ra.addFlashAttribute("error", "Tutor not found!");
+            return "redirect:/student/view-tutors";
+        }
+        
+        Booking booking = new Booking();
+        booking.setStudent(student);
+        booking.setTutor(tutor);
+        booking.setSessionDate(java.time.LocalDate.parse(date));
+        booking.setTimeSlot(timeSlot);
+        booking.setNotes(notes);
+        booking.setStatus(com.tutorbooking.tutor_booking_system.model.Booking.Status.PENDING);
+        booking.setPaymentStatus(com.tutorbooking.tutor_booking_system.model.Booking.PaymentStatus.UNPAID);
+        booking.setTotalAmount(tutor.getHourlyRate());
+        
+        bookingService.saveBooking(booking);
+        
+        ra.addFlashAttribute("success", "Booking request submitted successfully!");
+        return "redirect:/student/my-bookings";
+    }
+
+    @PostMapping("/cancel-booking")
+    public String cancelBooking(@RequestParam Long bookingId, HttpSession session, RedirectAttributes ra) {
         if (session.getAttribute("studentId") == null) {
             return "redirect:/student/login";
         }
-        Tutor tutor = tutorRepository.findById(id).orElse(null);
-        model.addAttribute("tutor", tutor);
-        return "student/book-tutor";
+        bookingService.updateStatus(bookingId, com.tutorbooking.tutor_booking_system.model.Booking.Status.CANCELLED);
+        ra.addFlashAttribute("success", "Booking cancelled successfully!");
+        return "redirect:/student/my-bookings";
+    }
+
+    @PostMapping("/leave-review")
+    public String leaveReview(@RequestParam Long tutorId,
+                              @RequestParam Long bookingId,
+                              @RequestParam Integer rating,
+                              @RequestParam String comment,
+                              HttpSession session,
+                              RedirectAttributes ra) {
+        Long studentId = (Long) session.getAttribute("studentId");
+        if (studentId == null) {
+            return "redirect:/student/login";
+        }
+        
+        Student student = studentService.getStudentById(studentId);
+        Tutor tutor = tutorRepository.findById(tutorId).orElse(null);
+        
+        if (tutor == null) {
+            ra.addFlashAttribute("error", "Tutor not found!");
+            return "redirect:/student/my-bookings";
+        }
+        
+        com.tutorbooking.tutor_booking_system.model.Review review = new com.tutorbooking.tutor_booking_system.model.Review();
+        review.setStudent(student);
+        review.setTutor(tutor);
+        review.setBookingId(bookingId);
+        review.setRating(rating);
+        review.setComment(comment);
+        review.setCreatedAt(java.time.LocalDateTime.now());
+        review.setApproved(true);
+        
+        reviewService.saveReview(review);
+        
+        // Update Tutor's rating and review count
+        java.util.List<com.tutorbooking.tutor_booking_system.model.Review> reviews = reviewService.getReviewsByTutor(tutorId);
+        int count = reviews.size();
+        double sum = reviews.stream().mapToDouble(com.tutorbooking.tutor_booking_system.model.Review::getRating).sum();
+        double avg = count > 0 ? sum / count : 0.0;
+        
+        tutor.setReviewCount(count);
+        tutor.setRating(java.math.BigDecimal.valueOf(avg));
+        tutorRepository.save(tutor);
+        
+        ra.addFlashAttribute("success", "Thank you for your review!");
+        return "redirect:/student/my-bookings";
     }
 
     @GetMapping("/list")
