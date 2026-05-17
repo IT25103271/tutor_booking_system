@@ -139,7 +139,10 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" value="${student.password}" required>
+                            <div class="position-relative">
+                                <input type="password" id="passwordInput" name="password" class="form-control" value="${student.password}" required style="padding-right: 40px;">
+                                <i class="bi bi-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="cursor: pointer; color: #6c757d;"></i>
+                            </div>
                         </div>
                         <div class="mb-4">
                             <label class="form-label">Address</label>
@@ -259,6 +262,20 @@
                 badge.classList.remove('d-none');
             }
         }
+
+        document.getElementById('togglePassword')?.addEventListener('click', function () {
+            const passwordInput = document.getElementById('passwordInput');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            if (type === 'password') {
+                this.classList.remove('bi-eye-slash');
+                this.classList.add('bi-eye');
+            } else {
+                this.classList.remove('bi-eye');
+                this.classList.add('bi-eye-slash');
+            }
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
