@@ -41,6 +41,15 @@ public class AdminService {
         adminRepository.deleteById(id);
     }
 
+    public boolean changePassword(Long adminId, String currentPassword, String newPassword) {
+        Admin admin = getAdminById(adminId);
+        if (admin == null) return false;
+        if (!admin.getPassword().equals(currentPassword)) return false;
+        admin.setPassword(newPassword); // hash in production
+        adminRepository.save(admin);
+        return true;
+    }
+
     public Admin loginAdmin(String email, String password){
         Admin admin=adminRepository.findByEmail(email);
         if (admin != null && admin.getPassword().equals(password)){

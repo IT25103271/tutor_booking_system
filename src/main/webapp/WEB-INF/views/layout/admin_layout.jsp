@@ -215,18 +215,11 @@
         </li>
         <li class="sb-divider"></li>
         <li>
-            <a href="/admin/edit"
+            <a href="/admin/profile"
                class="${activePage == 'profile' ? 'active' : ''}"
-               data-label="Edit Profile">
-                <i class="bi bi-pencil-square"></i>
-                <span class="nav-label">Edit Profile</span>
-            </a>
-        </li>
-        <li>
-            <a href="/admin/delete" data-label="Delete Account"
-               style="color:rgba(255,100,100,0.85)"
-               onclick="return confirm('Are you sure you want to delete your account? This cannot be undone.')">
-                <i class="bi bi-trash"></i><span class="nav-label">Delete Account</span>
+               data-label="My Profile">
+                <i class="bi bi-person-gear"></i>
+                <span class="nav-label">My Profile</span>
             </a>
         </li>
 

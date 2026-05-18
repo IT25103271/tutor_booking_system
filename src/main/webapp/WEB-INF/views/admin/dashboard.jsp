@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% request.setAttribute("activePage", "dashboard"); %>
 <% request.setAttribute("pageTitle", "Dashboard"); %>
-<%@ include file="layout.jsp" %>
+<%@ include file="../layout/admin_layout.jsp" %>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
@@ -163,4 +163,4 @@ new Chart(document.getElementById('chartMembership'), {
 });
 </script>
 
-<%@ include file="layout-footer.jsp" %>
+<%@ include file="../layout/admin_layout-footer.jsp" %>

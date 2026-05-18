@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Login</title>
+    <title>Admin - Forgot Password</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <style>
@@ -18,7 +18,6 @@
         .login-card{
             background: #fff;
             border-radius: 20px;
-            padding: 2rem;
             overflow: hidden;
             width: 100%;
             max-width: 420px;
@@ -70,13 +69,23 @@
         .form-control{
             border-left: none;
         }
-        .forgot-link {
+        .admin-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        .back-link {
             color: #0f3460;
             text-decoration: none;
-            font-size: 0.85rem;
             font-weight: 500;
+            font-size: 0.9rem;
         }
-        .forgot-link:hover {
+        .back-link:hover {
             text-decoration: underline;
         }
     </style>
@@ -84,11 +93,12 @@
 <body>
 <div class="login-card">
     <div class="loging-header">
+        <div class="admin-badge"><i class="bi bi-shield-lock me-1"></i>Admin Portal</div>
         <div class="login-icon">
-            <i class="bi bi-shield-lock-fill"></i>
+            <i class="bi bi-key-fill"></i>
         </div>
-        <h4 class="fw-bold mb-1">Admin Login</h4>
-        <p class="mb-0 opacity-75 small">Home Tutor System</p>
+        <h4 class="fw-bold mb-1">Forgot Password?</h4>
+        <p class="mb-0 opacity-75 small">Enter your email to receive a reset code</p>
     </div>
     <div class="login-body">
         <c:if test="${not empty error}">
@@ -101,66 +111,27 @@
                 <i class="bi bi-check-circle me-1"></i>${success}
             </div>
         </c:if>
-        <form method="post" action="/admin/login">
-            <div class="mb-3">
+        <form method="post" action="/admin/forgot-password">
+            <div class="mb-4">
                 <label class="form-label fw-semibold small text-muted">Email Address</label>
                 <div class="input-group">
                     <span class="input-group-text">
                         <i class="bi bi-envelope text-muted"></i>
                     </span>
-                    <input type="email" name="email" class="form-control" placeholder="Email address" required>
+                    <input type="email" name="email" class="form-control" placeholder="admin@example.com" required autofocus>
                 </div>
             </div>
-
-            <div class="mb-3">
-                <label for="password" class="form-label fw-semibold">Password</label>
-                <div class="input-group">
-                    <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            class="form-control"
-                            placeholder="Enter your password"
-                            spellcheck="false"
-                            autocorrect="off"
-                            autocapitalize="off"
-                            autocomplete="current-password"
-                            required
-                    >
-                    <button
-                            type="button"
-                            class="input-group-text bg-white border-start-0"
-                            id="togglePassword"
-                            title="Show/Hide password"
-                            tabindex="-1"
-                            style="cursor: pointer;"
-                    >
-                        <i class="bi bi-eye" id="toggleIcon"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember">
-                    <label class="form-check-label small text-muted" for="remember">Remember me</label>
-                </div>
-                <a href="/admin/forgot-password" class="forgot-link">Forgot password?</a>
-            </div>
-            <button type="submit" class="btn btn-login">
-                <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+            <button type="submit" class="btn btn-login mb-3">
+                <i class="bi bi-send me-2"></i>Send Reset Code
             </button>
+            <div class="text-center">
+                <a href="/admin/login" class="back-link">
+                    <i class="bi bi-arrow-left me-1"></i>Back to Login
+                </a>
+            </div>
         </form>
     </div>
 </div>
-<script>
-    function togglePwd(){
-        const p = document.getElementById('pwd');
-        const i = document.getElementById('eyeIcon');
-        p.type = p.type === 'password' ? 'text' : 'password';
-        i.className = p.type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
-    }
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

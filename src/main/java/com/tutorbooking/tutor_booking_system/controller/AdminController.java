@@ -1,7 +1,6 @@
 package com.tutorbooking.tutor_booking_system.controller;
 
 import com.tutorbooking.tutor_booking_system.model.Admin;
-import com.tutorbooking.tutor_booking_system.model.Booking;
 import com.tutorbooking.tutor_booking_system.service.AdminService;
 import com.tutorbooking.tutor_booking_system.service.BookingService;
 import com.tutorbooking.tutor_booking_system.service.ReviewService;
@@ -16,8 +15,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.math.BigDecimal;
 
+/**
+ * AdminController
+ *
+ * Handles: Admin authentication, dashboard stats/charts, and admin profile management.
+ *
+ * Tutor management   → TutorController  (/admin/tutors/...)
+ * Student management → StudentController (/admin/students/...)
+ * Booking management → BookingController (/admin/bookings/...)
+ * Review management  → ReviewController  (/admin/reviews/...)
+ */
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -27,7 +35,6 @@ public class AdminController {
     @Autowired private StudentService studentService;
     @Autowired private ReviewService  reviewService;
     @Autowired private BookingService bookingService;
-
 
     private boolean isLoggedIn(HttpSession session) {
         return session.getAttribute("adminId") != null;
@@ -90,7 +97,7 @@ public class AdminController {
         model.addAttribute("subjectChartLabels", subjectLabels);
         model.addAttribute("subjectChartValues", subjectValues);
 
-        // Chart: bookings over time (real data)
+        // Chart: bookings over time
         List<Object[]> bookingData   = bookingService.getMonthlyBookingCounts();
         List<String>   bookingLabels = new ArrayList<>();
         List<Long>     bookingValues = new ArrayList<>();
@@ -98,7 +105,6 @@ public class AdminController {
             bookingLabels.add((String) row[0]);
             bookingValues.add((Long)   row[1]);
         }
-        // Fallback placeholder if no bookings yet
         if (bookingLabels.isEmpty()) {
             bookingLabels = List.of("Jan","Feb","Mar","Apr","May","Jun");
             bookingValues = List.of(0L,0L,0L,0L,0L,0L);
@@ -117,181 +123,91 @@ public class AdminController {
         for (long v : ratingArr) ratingValues.add(v);
         model.addAttribute("ratingChartValues", ratingValues);
 
-        // Chart: membership breakdown
-        List<Object[]> memData   = studentService.getMembershipCounts();
-        List<String>   memLabels = new ArrayList<>();
-        List<Long>     memValues = new ArrayList<>();
-        for (Object[] row : memData) {
-            memLabels.add(row[0].toString());
-            memValues.add((Long) row[1]);
-        }
-        model.addAttribute("membershipChartLabels", memLabels);
-        model.addAttribute("membershipChartValues", memValues);
-
         return "admin/dashboard";
     }
 
     // ══════════════════════════════════════════════════════════
-    //  TUTORS
+    //  PROFILE — VIEW / EDIT / CHANGE PASSWORD / DELETE ACCOUNT
     // ══════════════════════════════════════════════════════════
 
-    @GetMapping("/tutors")
-    public String tutors(HttpSession session, Model model) {
+    @GetMapping("/profile")
+    public String profilePage(HttpSession session, Model model) {
         if (!isLoggedIn(session)) return "redirect:/admin/login";
-        model.addAttribute("tutors", tutorService.getAllTutors());
-        return "admin/tutors";
+        Long id = (Long) session.getAttribute("adminId");
+        model.addAttribute("admin", adminService.getAdminById(id));
+        return "admin/profile";
     }
-
-    @PostMapping("/tutors/{id}/verify")
-    public String verifyTutor(@PathVariable Long id,
-                              HttpSession session,
-                              RedirectAttributes ra) {
-        if (!isLoggedIn(session)) return "redirect:/admin/login";
-        var t = tutorService.verifyTutor(id);
-        if (t != null) ra.addFlashAttribute("success", t.getName() + " has been verified.");
-        else           ra.addFlashAttribute("error",   "Tutor not found.");
-        return "redirect:/admin/tutors";
-    }
-
-    @PostMapping("/tutors/{id}/delete")
-    public String deleteTutor(@PathVariable Long id,
-                                HttpSession session,
-                                RedirectAttributes ra) {
-        if (!isLoggedIn(session)) return "redirect:/admin/login";
-
-        try {
-            tutorService.deleteTutor(id);
-            ra.addFlashAttribute("success", "Tutor deleted successfully.");
-        } catch (Exception e) {
-            ra.addFlashAttribute("error", "Cannot delete tutor: They may have active bookings or reviews.");
-        }
-
-        return "redirect:/admin/tutors"; // Matches your list view URL
-    }
-
-
-    // ══════════════════════════════════════════════════════════
-    //  STUDENTS
-    // ══════════════════════════════════════════════════════════
-
-    @GetMapping("/students")
-    public String students(HttpSession session, Model model) {
-        if (!isLoggedIn(session)) return "redirect:/admin/login";
-        model.addAttribute("students", studentService.getAllStudents());
-        return "admin/students";
-    }
-
-    @PostMapping("/students/{id}/delete")
-    public String deleteStudent(@PathVariable Long id,
-                                HttpSession session,
-                                RedirectAttributes ra) {
-        if (!isLoggedIn(session)) return "redirect:/admin/login";
-
-        try {
-            studentService.deleteStudent(id);
-            ra.addFlashAttribute("success", "Student deleted successfully.");
-        } catch (Exception e) {
-            ra.addFlashAttribute("error", "Cannot delete student: They may have active bookings or reviews.");
-        }
-
-        return "redirect:/admin/students"; // Matches your list view URL
-    }
-
-
-    // ══════════════════════════════════════════════════════════
-    //  BOOKINGS
-    // ══════════════════════════════════════════════════════════
-
-    @GetMapping("/bookings")
-    public String bookings(HttpSession session, Model model) {
-        if (!isLoggedIn(session)) return "redirect:/admin/login";
-        model.addAttribute("bookings", bookingService.getAllBookings());
-        return "admin/bookings";
-    }
-
-    @PostMapping("/bookings/{id}/cancel")
-    public String cancelBooking(@PathVariable Long id,
-                                HttpSession session,
-                                RedirectAttributes ra) {
-        if (!isLoggedIn(session)) return "redirect:/admin/login";
-        bookingService.updateStatus(id, Booking.Status.CANCELLED);
-        ra.addFlashAttribute("success", "Booking #" + id + " has been cancelled.");
-        return "redirect:/admin/bookings";
-    }
-
-    @PostMapping("/bookings/{id}/delete")
-    public String deleteBooking(@PathVariable Long id,
-                                HttpSession session,
-                                RedirectAttributes ra) {
-        if (!isLoggedIn(session)) return "redirect:/admin/login";
-        bookingService.deleteBooking(id);
-        ra.addFlashAttribute("success", "Booking deleted.");
-        return "redirect:/admin/bookings";
-    }
-
-    // ══════════════════════════════════════════════════════════
-    //  REVIEWS
-    // ══════════════════════════════════════════════════════════
-
-    @GetMapping("/reviews")
-    public String reviews(HttpSession session, Model model) {
-        if (!isLoggedIn(session)) return "redirect:/admin/login";
-        model.addAttribute("reviews", reviewService.getAllReviews());
-        return "admin/reviews";
-    }
-
-    @PostMapping("/reviews/{id}/delete")
-    public String deleteReview(@PathVariable Long id,
-                               HttpSession session,
-                               RedirectAttributes ra) {
-        if (!isLoggedIn(session)) return "redirect:/admin/login";
-        reviewService.deleteReview(id);
-        ra.addFlashAttribute("success", "Review deleted.");
-        return "redirect:/admin/reviews";
-    }
-
-    // ══════════════════════════════════════════════════════════
-    //  PROFILE — EDIT / DELETE
-    // ══════════════════════════════════════════════════════════
 
     @GetMapping("/edit")
-    public String editPage(HttpSession session, Model model) {
-        if (!isLoggedIn(session)) return "redirect:/admin/login";
-        Long id     = (Long) session.getAttribute("adminId");
-        Admin admin = adminService.getAdminById(id);
-        model.addAttribute("admin", admin);
-        return "admin/edit";
+    public String editPage(HttpSession session) {
+        return "redirect:/admin/profile";
     }
 
     @PostMapping("/edit")
-    public String editSubmit(@ModelAttribute Admin formAdmin,
+    public String editSubmit(@RequestParam String name,
+                             @RequestParam String email,
+                             @RequestParam(required = false) String phone,
                              HttpSession session,
                              RedirectAttributes ra) {
         if (!isLoggedIn(session)) return "redirect:/admin/login";
         Long id     = (Long) session.getAttribute("adminId");
         Admin admin = adminService.getAdminById(id);
-        admin.setName(formAdmin.getName());
-        admin.setPhone(formAdmin.getPhone());
-        if (formAdmin.getPassword() != null && !formAdmin.getPassword().isBlank()) {
-            admin.setPassword(formAdmin.getPassword());
-        }
+        admin.setName(name);
+        admin.setEmail(email);
+        admin.setPhone(phone);
         adminService.updateAdmin(admin);
         session.setAttribute("adminName", admin.getName());
         ra.addFlashAttribute("success", "Profile updated successfully.");
-        return "redirect:/admin/edit";
+        return "redirect:/admin/profile";
     }
 
-    @GetMapping("/delete")
-    public String deleteAccount(HttpSession session) {
+    @PostMapping("/profile/changePassword")
+    public String changePassword(@RequestParam String currentPassword,
+                                 @RequestParam String newPassword,
+                                 @RequestParam String confirmPassword,
+                                 HttpSession session,
+                                 RedirectAttributes ra) {
         if (!isLoggedIn(session)) return "redirect:/admin/login";
+
+        if (!newPassword.equals(confirmPassword)) {
+            ra.addFlashAttribute("pwError", "New passwords do not match.");
+            return "redirect:/admin/profile";
+        }
+        if (newPassword.length() < 8) {
+            ra.addFlashAttribute("pwError", "New password must be at least 8 characters.");
+            return "redirect:/admin/profile";
+        }
+
         Long id = (Long) session.getAttribute("adminId");
+        boolean changed = adminService.changePassword(id, currentPassword, newPassword);
+
+        if (changed) {
+            ra.addFlashAttribute("pwSuccess", "Password updated successfully.");
+        } else {
+            ra.addFlashAttribute("pwError", "Current password is incorrect.");
+        }
+        return "redirect:/admin/profile";
+    }
+
+    @PostMapping("/delete")
+    public String deleteAccount(@RequestParam String confirmPassword,
+                                HttpSession session,
+                                RedirectAttributes ra) {
+        if (!isLoggedIn(session)) return "redirect:/admin/login";
+        Long id     = (Long) session.getAttribute("adminId");
+        Admin admin = adminService.getAdminById(id);
+
+        if (admin == null) {
+            session.invalidate();
+            return "redirect:/admin/login";
+        }
+        if (!admin.getPassword().equals(confirmPassword)) {
+            ra.addFlashAttribute("deleteError", "Incorrect password. Account was not deleted.");
+            return "redirect:/admin/profile";
+        }
+
         adminService.deleteAdmin(id);
         session.invalidate();
-        return "redirect:/admin/login";
+        return "redirect:/admin/login?deleted=true";
     }
-
-
-
-
-
 }
