@@ -27,9 +27,9 @@ public class ForgotPasswordController {
     @Autowired
     private EmailService emailService;
 
-    // ══════════════════════════════════════════════════════════
+
     //  STEP 1: ENTER EMAIL
-    // ══════════════════════════════════════════════════════════
+
 
     @GetMapping("/forgot-password")
     public String forgotPasswordPage() {
@@ -63,9 +63,9 @@ public class ForgotPasswordController {
         return "redirect:/tutor/verify-reset-otp";
     }
 
-    // ══════════════════════════════════════════════════════════
+
     //  STEP 2: VERIFY OTP
-    // ══════════════════════════════════════════════════════════
+
 
     @GetMapping("/verify-reset-otp")
     public String verifyResetOtpPage(HttpSession session, Model model, RedirectAttributes ra) {
@@ -125,9 +125,9 @@ public class ForgotPasswordController {
         return "redirect:/tutor/verify-reset-otp";
     }
 
-    // ══════════════════════════════════════════════════════════
+
     //  STEP 3: RESET PASSWORD
-    // ══════════════════════════════════════════════════════════
+
 
     @GetMapping("/reset-password")
     public String resetPasswordPage(HttpSession session, RedirectAttributes ra) {
