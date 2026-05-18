@@ -1,119 +1,85 @@
-package com.tutorbooking.tutor_booking_system.entity;
+package com.tutorbooking.tutor_booking_system.model;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Entity
-@Table(name = "reviews")
+@Table(name = "reviews",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"student_id", "booking_id"}, name = "uk_student_booking_review")
+        }
+)
 public class Review {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column(nullable = false)
-    private Long tutorId;
-    
-    @Column(nullable = false)
-    private Long studentId;
-    
-    @Column(nullable = false)
-    private String studentName;
-    
-    @Column(nullable = false)
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tutor_id")
+    private Tutor tutor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id")
+    private Student student;
+
+    @Column(name = "booking_id")
+    private Long bookingId;
+
     private Integer rating;
-    
-    @Column(columnDefinition = "TEXT")
-    private String reviewText;
-    
-    @Column(nullable = false)
+
+    @Column(length = 1000)
+    private String comment;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-    
-    @Column(name = "is_verified")
-    private Boolean isVerified = false;
 
-    public Review() {
+    private Boolean approved;
+
+    // Auto-set createdAt before insert
+    @PrePersist
+    protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-    }
-
-    public Review(Long tutorId, Long studentId, String studentName, Integer rating, String reviewText) {
-        this.tutorId = tutorId;
-        this.studentId = studentId;
-        this.studentName = studentName;
-        this.rating = rating;
-        this.reviewText = reviewText;
-        this.createdAt = LocalDateTime.now();
-        this.isVerified = false;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getTutorId() {
-        return tutorId;
-    }
-
-    public void setTutorId(Long tutorId) {
-        this.tutorId = tutorId;
-    }
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
-    }
-
-    public String getStudentName() {
-        return studentName;
-    }
-
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public Integer getRating() {
-        return rating;
-    }
-
-    public void setRating(Integer rating) {
-        if (rating >= 1 && rating <= 5) {
-            this.rating = rating;
+        if (this.approved == null) {
+            this.approved = true;
         }
     }
 
-    public String getReviewText() {
-        return reviewText;
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Tutor getTutor() { return tutor; }
+    public void setTutor(Tutor tutor) { this.tutor = tutor; }
+
+    public Student getStudent() { return student; }
+    public void setStudent(Student student) { this.student = student; }
+
+    public String getStudentName() {
+        return student != null ? student.getName() : "Unknown Student";
     }
 
-    public void setReviewText(String reviewText) {
-        this.reviewText = reviewText;
+    public String getTutorName() {
+        return tutor != null ? tutor.getName() : "Unknown Tutor";
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public Long getBookingId() { return bookingId; }
+    public void setBookingId(Long bookingId) { this.bookingId = bookingId; }
+
+    public Integer getRating() { return rating != null ? rating : 0; }
+    public void setRating(Integer rating) { this.rating = rating; }
+
+    public String getComment() { return comment; }
+    public void setComment(String comment) { this.comment = comment; }
+
+    public String getDate() {
+        return createdAt != null ? createdAt.toLocalDate().toString() : "N/A";
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public Boolean getIsVerified() {
-        return isVerified;
-    }
-
-    public void setIsVerified(Boolean verified) {
-        isVerified = verified;
-    }
-
-    public String getFormattedDate() {
-        return createdAt.format(DateTimeFormatter.ofPattern("MMM dd, yyyy"));
-    }
+    public Boolean getApproved() { return approved != null ? approved : false; }
+    public void setApproved(Boolean approved) { this.approved = approved; }
 }
