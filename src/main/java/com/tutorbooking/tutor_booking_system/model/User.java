@@ -1,6 +1,7 @@
 package com.tutorbooking.tutor_booking_system.model;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -8,16 +9,16 @@ public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String name;
-    
+
     @Column(unique = true)
     private String email;
-    
+
     private String phone;
     private String password;
     private String role;
-    
+
     private LocalDateTime createdAt;
     private LocalDateTime lastLogin;
 

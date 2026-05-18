@@ -25,13 +25,20 @@ public class StudentService {
         return null;
     }
 
+    public boolean verifyPassword(Student student, String rawPassword) {
+        return rawPassword.equals(student.getPassword());
+    }
+
+    public void updatePassword(Student student, String newRawPassword) {
+        student.setPassword(newRawPassword);
+        studentRepository.save(student);
+    }
+
     public Student getStudentById(Long id) {
         return studentRepository.findById(id).orElse(null);
     }
 
-    public Student updateStudent(Student student) {
-        return studentRepository.save(student);
-    }
+
 
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
@@ -41,15 +48,38 @@ public class StudentService {
         return studentRepository.existsByEmail(email);
     }
 
-    public long countAll() {
-        return studentRepository.count();
-    }
-
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
-    }
-
     public long getStudentCount() {
         return studentRepository.count();
     }
+
+    public long countAll() {
+        return studentRepository.count();
+    }
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
+    public void updateStudent(Student student) {
+        Student existing = studentRepository.findById(student.getId()).orElse(null);
+        if (existing != null) {
+            // Only update fields that were actually sent from the form
+            if (student.getName() != null && !student.getName().isEmpty()) {
+                existing.setName(student.getName());
+            }
+            if (student.getPhone() != null && !student.getPhone().isEmpty()) {
+                existing.setPhone(student.getPhone());
+            }
+            if (student.getAddress() != null && !student.getAddress().isEmpty()) {
+                existing.setAddress(student.getAddress());
+            }
+            // Don't touch email, password, or other fields
+
+
+            studentRepository.save(existing);
+        }
+    }
+    public Student getStudentByEmail(String email) {
+        return studentRepository.findByEmail(email);
+    }
+
+
 }
