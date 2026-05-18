@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream:src/main/java/com/tutorsystem/model/Subject.java
 package com.tutorsystem.model;
+=======
+package com.tutorbooking.tutor_booking_system.model;
+>>>>>>> Stashed changes:src/main/java/com/tutorbooking/tutor_booking_system/model/Subject.java
 
 import jakarta.persistence.*;
 

@@ -1,11 +1,18 @@
+<<<<<<< Updated upstream:src/main/java/com/tutorsystem/repository/SubjectRepository.java
 package com.tutorsystem.repository;
 
 import com.tutorsystem.model.Subject;
+=======
+package com.tutorbooking.tutor_booking_system.repository;
+
+import com.tutorbooking.tutor_booking_system.model.Subject;
+>>>>>>> Stashed changes:src/main/java/com/tutorbooking/tutor_booking_system/repository/SubjectRepository.java
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+<<<<<<< Updated upstream:src/main/java/com/tutorsystem/repository/SubjectRepository.java
 /**
  * SubjectRepository
  *
@@ -19,6 +26,8 @@ import java.util.List;
  * - save(subject)   → create or update
  * - deleteById(id)  → delete
  */
+=======
+>>>>>>> Stashed changes:src/main/java/com/tutorbooking/tutor_booking_system/repository/SubjectRepository.java
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
 
