@@ -8,6 +8,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
+        // Redirect to student login by default or a landing page
         return "redirect:/student/login";
     }
 }

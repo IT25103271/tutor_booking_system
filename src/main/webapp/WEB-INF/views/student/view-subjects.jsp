@@ -2,19 +2,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Bookings</title>
+    <title>Available Subjects | Student Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         body { background: #f0f2f5; font-family: 'Segoe UI', sans-serif; }
         .navbar { background: linear-gradient(135deg, #0d1b2a, #1b263b); padding: 1rem 2rem; }
         .navbar-brand { color: white; font-weight: 700; }
-        .card { border: none; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .table thead { background: #1b263b; color: white; }
-        .table { border-radius: 15px; overflow: hidden; }
-        .badge-pending { background: #ffc107; color: #000; }
-        .badge-confirmed { background: #198754; color: #fff; }
-        .badge-cancelled { background: #dc3545; color: #fff; }
+        .card { border: none; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .subject-icon {
+            width: 50px;
+            height: 50px;
+            background: #e9f5ff;
+            color: #0d6efd;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
         .sidebar-link { 
             display: flex; 
             align-items: center; 
@@ -29,7 +37,6 @@
             background: #f8f9fa; 
             color: #0d1b2a; 
             border-left: 4px solid #778da9;
-            padding-left: 25px;
         }
         .sidebar-link.active { 
             background: #0d1b2a !important; 
@@ -38,7 +45,6 @@
             border-left: 4px solid #00b4d8; 
         }
         .sidebar-link i { margin-right: 12px; font-size: 1.2rem; }
-        .sidebar-divider { height: 1px; background: #eee; margin: 5px 0; }
         .footer {
             background: #0d1b2a;
             color: rgba(255,255,255,0.7);
@@ -148,7 +154,7 @@
                         <i class="bi bi-speedometer2"></i> Dashboard
                     </a>
                     <div class="sidebar-divider"></div>
-                    <a href="${pageContext.request.contextPath}/student/view-subjects" class="sidebar-link">
+                    <a href="${pageContext.request.contextPath}/student/view-subjects" class="sidebar-link active">
                         <i class="bi bi-book"></i> Browse Subjects
                     </a>
                     <div class="sidebar-divider"></div>
@@ -156,71 +162,42 @@
                         <i class="bi bi-search"></i> View Tutors
                     </a>
                     <div class="sidebar-divider"></div>
-                    <a href="${pageContext.request.contextPath}/student/my-bookings" class="sidebar-link active">
+                    <a href="${pageContext.request.contextPath}/student/my-bookings" class="sidebar-link">
                         <i class="bi bi-calendar-check"></i> My Bookings
                     </a>
                 </div>
             </div>
             <div class="col-lg-9">
-                <h3 class="fw-bold mb-4" style="color: #0d1b2a">My Bookings</h3>
-                
-                <c:if test="${not empty success}">
-                    <div class="alert alert-success alert-dismissible fade show mb-4 rounded-3 shadow-sm border-0">
-                        <i class="bi bi-check-circle-fill me-2"></i> ${success}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                </c:if>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold text-dark">Available Subjects</h2>
+                    <span class="badge bg-primary rounded-pill px-3">${subjects.size()} Subjects Found</span>
+                </div>
 
-                <div class="card shadow-sm">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-                            <thead>
-                                <tr>
-                                    <th class="ps-4">Tutor</th>
-                                    <th>Subject</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Status</th>
-                                    <th class="text-end pe-4">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="booking" items="${bookings}">
-                                    <tr class="align-middle">
-                                        <td class="ps-4">
-                                            <div class="fw-bold">${booking.tutor.name}</div>
-                                            <small class="text-muted">${booking.tutor.email}</small>
-                                        </td>
-                                        <td>${booking.subject}</td>
-                                        <td>${booking.date}</td>
-                                        <td><span class="badge bg-light text-dark border">${booking.timeSlot}</span></td>
-                                        <td>
-                                            <span class="badge rounded-pill ${booking.status == 'Pending' ? 'badge-pending' : (booking.status == 'Confirmed' ? 'badge-confirmed' : 'badge-cancelled')}">
-                                                ${booking.status}
-                                            </span>
-                                        </td>
-                                        <td class="text-end pe-4">
-                                            <form action="${pageContext.request.contextPath}/student/cancel-booking" method="post" onsubmit="return confirm('Are you sure you want to cancel this booking?')">
-                                                <input type="hidden" name="bookingId" value="${booking.id}">
-                                                <button type="submit" class="btn btn-sm btn-outline-danger border-0">
-                                                    <i class="bi bi-x-circle me-1"></i> Cancel
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                                <c:if test="${empty bookings}">
-                                    <tr>
-                                        <td colspan="6" class="text-center py-5">
-                                            <i class="bi bi-calendar-x display-6 text-muted mb-3 d-block"></i>
-                                            <p class="text-muted">You haven't made any bookings yet.</p>
-                                            <a href="${pageContext.request.contextPath}/student/view-tutors" class="btn btn-primary btn-sm rounded-pill px-4">Find a Tutor</a>
-                                        </td>
-                                    </tr>
-                                </c:if>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="row g-4">
+                    <c:forEach var="subject" items="${subjects}">
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card h-100 p-4">
+                                <div class="subject-icon">
+                                    <i class="bi bi-journal-text"></i>
+                                </div>
+                                <h5 class="fw-bold mb-1">${subject.subjectName}</h5>
+                                <div class="mb-2">
+                                    <span class="badge bg-light text-dark border">${subject.category}</span>
+                                    <span class="badge bg-info bg-opacity-10 text-info">${subject.gradeLevel}</span>
+                                </div>
+                                <p class="text-muted small mb-4">${subject.description}</p>
+                                <a href="${pageContext.request.contextPath}/student/view-tutors?subject=${subject.subjectName}" class="btn btn-outline-primary btn-sm w-100 mt-auto">
+                                    Find Tutors for this Subject
+                                </a>
+                            </div>
+                        </div>
+                    </c:forEach>
+                    <c:if test="${empty subjects}">
+                        <div class="col-12 text-center py-5">
+                            <i class="bi bi-inbox display-1 text-muted opacity-25"></i>
+                            <p class="mt-3 text-muted">No subjects are currently listed in the system.</p>
+                        </div>
+                    </c:if>
                 </div>
             </div>
         </div>
