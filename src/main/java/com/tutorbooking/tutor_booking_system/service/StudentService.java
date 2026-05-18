@@ -1,9 +1,12 @@
 package com.tutorbooking.tutor_booking_system.service;
 
+import com.tutorbooking.tutor_booking_system.model.Booking;
 import com.tutorbooking.tutor_booking_system.model.Student;
+import com.tutorbooking.tutor_booking_system.repository.BookingRepository;
 import com.tutorbooking.tutor_booking_system.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,6 +15,7 @@ public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+    private BookingRepository bookingRepository;
 
     public Student registerStudent(Student student) {
         return studentRepository.save(student);
@@ -40,7 +44,15 @@ public class StudentService {
 
 
 
+    @Transactional
     public void deleteStudent(Long id) {
+        // Step 1: Delete all bookings for this student
+        List<Booking> bookings = bookingRepository.findByStudentId(id);
+        for (Booking booking : bookings) {
+            bookingRepository.delete(booking);
+        }
+
+        // Step 2: Delete the student (no FK error now)
         studentRepository.deleteById(id);
     }
 

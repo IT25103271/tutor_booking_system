@@ -268,19 +268,33 @@ public class StudentController {
     public String deleteAccount(@RequestParam String confirmPassword,
                                 HttpSession session,
                                 RedirectAttributes ra) {
-        Long studentId = (Long) session.getAttribute("studentId");
-        if (studentId == null) return "redirect:/student/login";
 
+        Long studentId = (Long) session.getAttribute("studentId");
         Student student = studentService.getStudentById(studentId);
+        if (student == null) {
+            return "redirect:/student/login";
+        }
+
+        // Verify password
         if (!studentService.verifyPassword(student, confirmPassword)) {
-            ra.addFlashAttribute("deleteError", "Password is incorrect. Account not deleted.");
+            ra.addFlashAttribute("deleteError", "Incorrect password. Account was not deleted.");
             return "redirect:/student/profile";
         }
 
-        studentService.deleteStudent(studentId);
-        session.invalidate();
-        ra.addFlashAttribute("success", "Account deleted successfully.");
-        return "redirect:/student/login";
+        try {
+            // Delete student (bookings deleted automatically via service)
+            studentService.deleteStudent(student.getId());
+
+            // Clear session
+            session.invalidate();
+
+            ra.addFlashAttribute("message", "Your account has been permanently deleted.");
+            return "redirect:/";
+
+        } catch (Exception e) {
+            ra.addFlashAttribute("deleteError", "Could not delete account: " + e.getMessage());
+            return "redirect:/student/profile";
+        }
     }
 
     // ══════════════════════════════════════════════════════════

@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
->>>>>>> IT25103271
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -10,15 +7,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <style>
-        body{
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%,#0f3460 100%);
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Segoe UI', sans-serif;
         }
-        .login-card{
+        .login-card {
             background: #fff;
             border-radius: 20px;
             padding: 2rem;
@@ -27,13 +24,13 @@
             max-width: 420px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.4);
         }
-        .loging-header{
-            background: linear-gradient(135deg, #1a1a2e ,#0f3460);
+        .loging-header {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
             text-align: center;
             padding: 2.5rem 2rem;
             color: #fff;
         }
-        .login-icon{
+        .login-icon {
             width: 70px;
             height: 70px;
             background: rgba(255, 255, 255, 0.15);
@@ -45,15 +42,15 @@
             margin: 0 auto 1rem;
             border: 2px solid rgba(255,255,255,0.3);
         }
-        .login-body{
+        .login-body {
             padding: 2rem;
         }
-        .form-control:focus{
+        .form-control:focus {
             border-color: #0f3460;
             box-shadow: 0 0 0 0.2rem rgba(15,52,96,0.2);
         }
-        .btn-login{
-            background: linear-gradient(135deg, #1a1a2e ,#0f3460);
+        .btn-login {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
             color: white;
             border: none;
             width: 100%;
@@ -62,19 +59,17 @@
             font-size: 1rem;
             font-weight: 600;
         }
-        .btn-login:hover{
+        .btn-login:hover {
             opacity: 0.9;
             color: #fff;
         }
-        .input-group-text{
+        .input-group-text {
             background: #f8f9fa;
             border-right: none;
         }
-        .form-control{
+        .form-control {
             border-left: none;
         }
-<<<<<<< HEAD
-=======
         .forgot-link {
             color: #0f3460;
             text-decoration: none;
@@ -84,7 +79,6 @@
         .forgot-link:hover {
             text-decoration: underline;
         }
->>>>>>> IT25103271
     </style>
 </head>
 <body>
@@ -94,11 +88,7 @@
             <i class="bi bi-shield-lock-fill"></i>
         </div>
         <h4 class="fw-bold mb-1">Admin Login</h4>
-<<<<<<< HEAD
-        <p class="mb-0 opacity-75 small">Homme Tutor System</p>
-=======
         <p class="mb-0 opacity-75 small">Home Tutor System</p>
->>>>>>> IT25103271
     </div>
     <div class="login-body">
         <c:if test="${not empty error}">
@@ -111,43 +101,22 @@
                 <i class="bi bi-check-circle me-1"></i>${success}
             </div>
         </c:if>
-<<<<<<< HEAD
         <form method="post" action="${pageContext.request.contextPath}/admin/login">
-=======
-        <form method="post" action="/admin/login">
->>>>>>> IT25103271
             <div class="mb-3">
                 <label class="form-label fw-semibold small text-muted">Email Address</label>
                 <div class="input-group">
                     <span class="input-group-text">
                         <i class="bi bi-envelope text-muted"></i>
                     </span>
-<<<<<<< HEAD
-                <input type="email" name="email" class="form-control" placeholder="Email address" required>
+                    <input type="email" name="email" class="form-control" placeholder="Email address" required>
                 </div>
             </div>
-            <div class="mb-4">
-                <label class="form-label fw-semibold small text-muted">Password</label>
+            <div class="mb-3">
+                <label for="password" class="form-label fw-semibold small text-muted">Password</label>
                 <div class="input-group">
                     <span class="input-group-text">
                         <i class="bi bi-lock text-muted"></i>
                     </span>
-                    <input type="password" name="password" class="form-control" id="pwd" placeholder="Password" required>
-                    <button type="button" class="btn btn-light border" onclick="togglePwd()">
-                        <i class="bi bi-eye" id="eyeIcon"></i>
-                    </button>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-login">
-                <i class="bi bi-box-arrow-in rigth me-2">Sign In</i>
-=======
-                    <input type="email" name="email" class="form-control" placeholder="Email address" required>
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label for="password" class="form-label fw-semibold">Password</label>
-                <div class="input-group">
                     <input
                             type="password"
                             id="password"
@@ -167,8 +136,9 @@
                             title="Show/Hide password"
                             tabindex="-1"
                             style="cursor: pointer;"
+                            onclick="togglePwd()"
                     >
-                        <i class="bi bi-eye" id="toggleIcon"></i>
+                        <i class="bi bi-eye" id="eyeIcon"></i>
                     </button>
                 </div>
             </div>
@@ -177,27 +147,22 @@
                     <input class="form-check-input" type="checkbox" id="remember">
                     <label class="form-check-label small text-muted" for="remember">Remember me</label>
                 </div>
-                <a href="/admin/forgot-password" class="forgot-link">Forgot password?</a>
+                <a href="${pageContext.request.contextPath}/admin/forgot-password" class="forgot-link">Forgot password?</a>
             </div>
             <button type="submit" class="btn btn-login">
                 <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
->>>>>>> IT25103271
             </button>
         </form>
     </div>
 </div>
 <script>
-    function togglePwd(){
-        const p = document.getElementById('pwd');
+    function togglePwd() {
+        const p = document.getElementById('password');
         const i = document.getElementById('eyeIcon');
         p.type = p.type === 'password' ? 'text' : 'password';
         i.className = p.type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-<<<<<<< HEAD
-=======
-
->>>>>>> IT25103271
 </body>
 </html>

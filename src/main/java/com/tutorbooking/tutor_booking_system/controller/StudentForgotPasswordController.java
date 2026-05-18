@@ -193,6 +193,9 @@ public class StudentForgotPasswordController {
         String studentName = (String) session.getAttribute("studentResetName");
         emailService.sendPasswordChangedConfirmation(resetEmail, studentName);
 
+        // Clean up OTP record
+        otpService.deleteOtp(resetEmail);
+
         session.removeAttribute("studentResetEmail");
         session.removeAttribute("studentResetName");
         session.removeAttribute("studentOtpVerified");

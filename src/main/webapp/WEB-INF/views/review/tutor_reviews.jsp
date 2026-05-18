@@ -23,60 +23,8 @@
     .star-display   { font-size: 1.5rem; }
 </style>
 
-<!-- Rating Summary -->
-<div class="row g-3 mb-4">
-    <div class="col-md-4">
-        <div class="rating-summary text-center">
-            <c:set var="ratingVal" value="${averageRating != null ? averageRating : 0}" />
-            <div class="rating-big">
-                <fmt:formatNumber value="${ratingVal}" pattern="0.00" />
-            </div>
-            <div class="star-display mb-2">
-                <c:forEach begin="1" end="${ratingVal.intValue()}" var="i">
-                    <i class="bi bi-star-fill text-warning"></i>
-                </c:forEach>
-                <c:if test="${ratingVal - ratingVal.intValue() >= 0.5}">
-                    <i class="bi bi-star-half text-warning"></i>
-                </c:if>
-                <c:forEach begin="1" end="${5 - ratingVal.intValue() - (ratingVal - ratingVal.intValue() >= 0.5 ? 1 : 0)}" var="i">
-                    <i class="bi bi-star text-white-50"></i>
-                </c:forEach>
-            </div>
-            <div class="small opacity-75">Average Rating</div>
-            <div class="mt-2">
-                <span class="badge bg-white text-dark">${reviewCount != null ? reviewCount : 0} Reviews</span>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-8">
-        <div class="stat-card p-4">
-            <h6 class="fw-bold mb-3" style="color: var(--navy);"><i class="bi bi-bar-chart me-2"></i>Rating Breakdown</h6>
-            <c:forEach begin="1" end="5" step="1" var="i">
-                <c:set var="star" value="${6 - i}" />
-                <div class="d-flex align-items-center mb-2">
-                    <span class="small text-muted" style="width: 50px;">${star} <i class="bi bi-star-fill text-warning"></i></span>
-                    <div class="flex-grow-1 mx-2">
-                        <div class="progress" style="height: 8px;">
-                            <c:set var="countForStar" value="0" />
-                            <c:if test="${not empty ratingCounts and star < fn:length(ratingCounts)}">
-                                <c:set var="countForStar" value="${ratingCounts[star]}" />
-                            </c:if>
-                            <c:set var="percentage" value="${reviewCount > 0 ? (countForStar / reviewCount * 100) : 0}" />
-                            <div class="progress-bar bg-warning" style="width: ${percentage}%"></div>
-                        </div>
-                    </div>
-                    <span class="small text-muted" style="width: 30px; text-align: right;">${countForStar}</span>
-                </div>
-            </c:forEach>
-        </div>
-    </div>
-</div>
 
-<div class="card">
-    <div class="card-header-custom">
-        <span><i class="bi bi-star me-2"></i>Student Reviews</span>
-        <span class="badge bg-light text-dark" id="reviewCount">${reviewCount != null ? reviewCount : 0} reviews</span>
-    </div>
+
 
     <!-- Filter bar -->
     <div class="filter-bar">

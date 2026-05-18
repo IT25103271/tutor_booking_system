@@ -193,6 +193,9 @@ public class AdminForgotPasswordController {
         String adminName = (String) session.getAttribute("adminResetName");
         emailService.sendPasswordChangedConfirmation(resetEmail, adminName);
 
+        // Clean up OTP record
+        otpService.deleteOtp(resetEmail);
+
         session.removeAttribute("adminResetEmail");
         session.removeAttribute("adminResetName");
         session.removeAttribute("adminOtpVerified");

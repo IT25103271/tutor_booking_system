@@ -5,28 +5,32 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Admin — ${pageTitle != null ? pageTitle : 'Dashboard'}</title>
+    <title>${pageTitle != null ? pageTitle : 'Student Portal'} — TutorBooking</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
     <style>
         /* ── Root ── */
         :root {
             --sidebar-width: 240px;
             --sidebar-collapsed: 68px;
-            --navy: #1a1a2e;
-            --navy2: #0f3460;
-            --accent: #00b4d8;
+            --primary: #4f6ef7;
+            --primary2: #3d5ce5;
+            --accent: #38bdf8;
+            --danger: #e94560;
+            --success: #2dc653;
+            --warning: #ffc107;
             --sidebar-text: rgba(255,255,255,0.82);
             --sidebar-hover: rgba(255,255,255,0.10);
-            --sidebar-active: rgba(0,180,216,0.18);
+            --sidebar-active: rgba(56,189,248,0.18);
         }
         *, *::before, *::after { box-sizing: border-box; }
-        body { margin: 0; background: #f0f2f5; font-family: 'Segoe UI', sans-serif; }
+        body { margin: 0; background: #f0f2f5; font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
 
         /* ── Sidebar ── */
         #sidebar {
             position: fixed; top: 0; left: 0; height: 100vh; width: var(--sidebar-width);
-            background: linear-gradient(180deg, var(--navy) 0%, #0d1b2a 100%);
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary2) 100%);
             border-right: 1px solid rgba(255,255,255,0.07);
             display: flex; flex-direction: column;
             transition: width 0.25s ease; overflow: hidden; z-index: 1040;
@@ -83,7 +87,7 @@
             display: flex; align-items: center; gap: 10px; overflow: hidden;
         }
         .sb-avatar {
-            min-width: 34px; height: 34px; background: var(--navy2);
+            min-width: 34px; height: 34px; background: var(--primary2);
             border: 2px solid var(--accent); border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             color: #fff; font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
@@ -102,11 +106,11 @@
             box-shadow: 0 1px 8px rgba(0,0,0,0.06);
         }
         #topbar.collapsed { left: var(--sidebar-collapsed); }
-        .topbar-title { font-weight: 700; color: var(--navy); font-size: 1rem; }
+        .topbar-title { font-weight: 700; color: var(--primary); font-size: 1rem; }
         .topbar-breadcrumb { font-size: 0.78rem; color: #adb5bd; margin-left: 4px; }
         .topbar-actions { margin-left: auto; display: flex; align-items: center; gap: 0.75rem; }
         .topbar-avatar {
-            width: 34px; height: 34px; background: var(--navy2);
+            width: 34px; height: 34px; background: var(--primary2);
             border-radius: 50%; display: flex; align-items: center;
             justify-content: center; color: #fff; font-weight: 700; font-size: 0.85rem; cursor: pointer;
         }
@@ -124,7 +128,7 @@
         /* ── Cards ── */
         .card { border: none; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
         .card-header-custom {
-            background: linear-gradient(135deg, var(--navy), var(--navy2));
+            background: linear-gradient(135deg, var(--primary), var(--primary2));
             color: #fff; padding: 0.9rem 1.25rem;
             border-radius: 12px 12px 0 0; font-weight: 600; font-size: 0.9rem;
             display: flex; align-items: center; justify-content: space-between;
@@ -133,13 +137,51 @@
         /* ── Alerts ── */
         .alert { border-radius: 10px; font-size: 0.875rem; }
 
+        /* ── Buttons ── */
+        .btn-primary-soft { background: var(--primary); border-color: var(--primary); color: #fff; }
+        .btn-primary-soft:hover { background: var(--primary2); border-color: var(--primary2); color: #fff; }
+        .btn-outline-primary-soft { border-color: var(--primary); color: var(--primary); }
+        .btn-outline-primary-soft:hover { background: var(--primary); color: #fff; }
+
+        /* ── Status badges ── */
+        .badge-PENDING   { background: #fff3cd; color: #856404; }
+        .badge-CONFIRMED { background: #cff4fc; color: #055160; }
+        .badge-COMPLETED { background: #d1e7dd; color: #0a3622; }
+        .badge-CANCELLED { background: #f8d7da; color: #842029; }
+
+        /* ── Tables ── */
+        .table-hover tbody tr:hover { background-color: rgba(79,110,247,0.04); }
+        .table thead th {
+            font-weight: 600; font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            color: #6c757d; border-bottom: 2px solid #e9ecef;
+        }
+
+        /* ── Stat cards ── */
+        .stat-card { border-left: 4px solid var(--primary2); transition: transform 0.18s; }
+        .stat-card:hover { transform: translateY(-3px); }
+        .stat-number { font-size: 1.9rem; font-weight: 700; color: var(--primary2); }
+
+        /* ── Section title ── */
+        .section-title {
+            color: var(--primary); font-weight: 700;
+            border-left: 4px solid var(--primary2); padding-left: 10px;
+            margin: 1.75rem 0 1rem; font-size: 1rem;
+        }
+
+        /* ── Form focus ── */
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 0.2rem rgba(56,189,248,0.25);
+        }
+
         /* ── Tooltip for collapsed sidebar ── */
         #sidebar.collapsed .sb-nav li { position: relative; }
         #sidebar.collapsed .sb-nav li a::after {
             content: attr(data-label);
             position: absolute; left: calc(var(--sidebar-collapsed) + 8px); top: 50%;
             transform: translateY(-50%);
-            background: #1a1a2e; color: #fff; padding: 4px 10px;
+            background: var(--primary); color: #fff; padding: 4px 10px;
             border-radius: 6px; font-size: 0.78rem; white-space: nowrap;
             opacity: 0; pointer-events: none; transition: opacity 0.15s;
             box-shadow: 0 2px 8px rgba(0,0,0,0.25); z-index: 9999;
@@ -153,19 +195,18 @@
 <div id="sidebar">
 
     <!-- Brand -->
-    <a href="/admin/dashboard" class="sb-brand">
+    <a href="${pageContext.request.contextPath}/student/dashboard" class="sb-brand">
         <div class="sb-brand-icon"><i class="bi bi-mortarboard-fill"></i></div>
         <div>
             <div class="sb-brand-text">TutorBooking</div>
-            <div class="sb-brand-sub">Admin Panel</div>
+            <div class="sb-brand-sub">Student Portal</div>
         </div>
     </a>
-
 
     <!-- Nav -->
     <ul class="sb-nav">
         <li>
-            <a href="/admin/dashboard"
+            <a href="${pageContext.request.contextPath}/student/dashboard"
                class="${activePage == 'dashboard' ? 'active' : ''}"
                data-label="Dashboard">
                 <i class="bi bi-speedometer2"></i>
@@ -174,57 +215,40 @@
         </li>
         <li class="sb-divider"></li>
         <li>
-            <a href="/admin/tutors"
-               class="${activePage == 'tutors' ? 'active' : ''}"
-               data-label="Tutors">
-                <i class="bi bi-person-badge"></i>
-                <span class="nav-label">Tutors</span>
-            </a>
-        </li>
-        <li>
-            <a href="/admin/students"
-               class="${activePage == 'students' ? 'active' : ''}"
-               data-label="Students">
-                <i class="bi bi-mortarboard"></i>
-                <span class="nav-label">Students</span>
-            </a>
-        </li>
-        <li>
-            <a href="/admin/reviews"
-               class="${activePage == 'reviews' ? 'active' : ''}"
-               data-label="Reviews">
-                <i class="bi bi-star"></i>
-                <span class="nav-label">Reviews</span>
-            </a>
-        </li>
-        <li>
-            <a href="/admin/bookings"
-               class="${activePage == 'bookings' ? 'active' : ''}"
-               data-label="Bookings">
-                <i class="bi bi-calendar-check"></i>
-                <span class="nav-label">Bookings</span>
-            </a>
-        </li>
-        <li>
-            <a href="/subject/list"
+            <a href="${pageContext.request.contextPath}/student/view-subjects"
                class="${activePage == 'subjects' ? 'active' : ''}"
-               data-label="Subjects">
+               data-label="Browse Subjects">
                 <i class="bi bi-journal-bookmark"></i>
-                <span class="nav-label">Subjects</span>
+                <span class="nav-label">Browse Subjects</span>
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/student/view-tutors"
+               class="${activePage == 'tutors' ? 'active' : ''}"
+               data-label="View Tutors">
+                <i class="bi bi-people"></i>
+                <span class="nav-label">View Tutors</span>
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/student/my-bookings"
+               class="${activePage == 'bookings' ? 'active' : ''}"
+               data-label="My Bookings">
+                <i class="bi bi-calendar-check"></i>
+                <span class="nav-label">My Bookings</span>
             </a>
         </li>
         <li class="sb-divider"></li>
         <li>
-            <a href="/admin/profile"
+            <a href="${pageContext.request.contextPath}/student/profile"
                class="${activePage == 'profile' ? 'active' : ''}"
                data-label="My Profile">
                 <i class="bi bi-person-gear"></i>
                 <span class="nav-label">My Profile</span>
             </a>
         </li>
-
         <li>
-            <a href="/admin/logout" data-label="Logout" style="color:rgba(255,100,100,0.85)">
+            <a href="${pageContext.request.contextPath}/student/logout" data-label="Logout" style="color:rgba(255,100,100,0.85)">
                 <i class="bi bi-box-arrow-right"></i>
                 <span class="nav-label">Logout</span>
             </a>
@@ -233,10 +257,15 @@
 
     <!-- Bottom user -->
     <div class="sb-user">
-        <div class="sb-avatar">${sessionScope.adminName != null ? sessionScope.adminName.charAt(0) : 'A'}</div>
+        <div class="sb-avatar">
+            <c:choose>
+                <c:when test="${not empty sessionScope.studentName}">${sessionScope.studentName.charAt(0)}</c:when>
+                <c:otherwise>S</c:otherwise>
+            </c:choose>
+        </div>
         <div class="sb-user-info">
-            <div class="sb-user-name">${sessionScope.adminName}</div>
-            <div class="sb-user-role">Administrator</div>
+            <div class="sb-user-name">${sessionScope.studentName}</div>
+            <div class="sb-user-role">Student</div>
         </div>
     </div>
 </div>
@@ -247,10 +276,30 @@
         <i class="bi bi-list fs-5"></i>
     </button>
     <div>
-        <span class="topbar-title">${pageTitle != null ? pageTitle : 'Dashboard'}</span>
-        <span class="topbar-breadcrumb">/ Admin</span>
+        <span class="topbar-title">
+            <c:if test="${not empty pageIcon}"><i class="bi bi-${pageIcon} me-1"></i></c:if>
+            ${pageTitle != null ? pageTitle : 'Dashboard'}
+        </span>
+        <span class="topbar-breadcrumb">/ Student</span>
+    </div>
+    <div class="topbar-actions">
+        <span class="text-muted small d-none d-md-inline">${student.email}</span>
     </div>
 </div>
 
 <!-- ══════════ MAIN CONTENT WRAPPER ══════════ -->
 <div id="main-content">
+
+<!-- Global alerts -->
+<c:if test="${not empty success}">
+    <div class="alert alert-success alert-dismissible fade show mb-3">
+        <i class="bi bi-check-circle me-2"></i>${success}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+</c:if>
+<c:if test="${not empty error}">
+    <div class="alert alert-danger alert-dismissible fade show mb-3">
+        <i class="bi bi-exclamation-circle me-2"></i>${error}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+</c:if>

@@ -26,6 +26,22 @@ public class TutorService {
         return null;
     }
 
+    // ── PASSWORD CHANGE (PLAIN TEXT) ──
+    @Transactional
+    public boolean changePassword(Long tutorId, String currentPassword, String newPassword) {
+        Tutor tutor = tutorRepository.findById(tutorId).orElse(null);
+        if (tutor == null) {
+            return false;
+        }
+        // Plain text comparison
+        if (!tutor.getPasswordHash().equals(currentPassword)) {
+            return false;
+        }
+        tutor.setPasswordHash(newPassword);
+        tutorRepository.save(tutor);
+        return true;
+    }
+
     public Tutor getTutorById(Long id) {
         return tutorRepository.findById(id).orElse(null);
     }
@@ -83,18 +99,7 @@ public class TutorService {
      * @return true  – password updated successfully
      *         false – current password was wrong or tutor not found
      */
-    public boolean changePassword(Long tutorId, String currentPassword, String newPassword) {
-        Tutor tutor = getTutorById(tutorId);
-        if (tutor == null) return false;
 
-        // Verify current password matches the stored hash
-        if (!tutor.getPasswordHash().equals(currentPassword)) return false;
-
-        // In production, hash newPassword before storing (e.g. BCrypt)
-        tutor.setPasswordHash(newPassword);
-        tutorRepository.save(tutor);
-        return true;
-    }
 
     public boolean emailExists(String email) {
         return tutorRepository.existsByEmail(email);

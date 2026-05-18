@@ -112,10 +112,6 @@ public class TutorController {
             ra.addFlashAttribute("error", "Email already registered.");
             return "redirect:/tutor/register";
         }
-        if (otpService.isEmailVerified(email)) {
-            ra.addFlashAttribute("error", "This email is already verified. Please login.");
-            return "redirect:/tutor/login";
-        }
 
         session.setAttribute("pendingName",          name);
         session.setAttribute("pendingEmail",         email);
@@ -133,6 +129,34 @@ public class TutorController {
         return "redirect:/tutor/verify-otp";
     }
 
+    // ── CHANGE PASSWORD (PLAIN TEXT) ──
+    @PostMapping("/tutor/profile/changePassword")
+    public String changePassword(@RequestParam String currentPassword,
+                                 @RequestParam String newPassword,
+                                 @RequestParam String confirmPassword,
+                                 HttpSession session,
+                                 RedirectAttributes ra) {
+        if (!isTutorLoggedIn(session)) return "redirect:/tutor/login";
+
+        if (!newPassword.equals(confirmPassword)) {
+            ra.addFlashAttribute("pwError", "New passwords do not match.");
+            return "redirect:/tutor/profile";
+        }
+        if (newPassword.length() < 8) {
+            ra.addFlashAttribute("pwError", "New password must be at least 8 characters.");
+            return "redirect:/tutor/profile";
+        }
+
+        Long id = (Long) session.getAttribute("tutorId");
+        boolean changed = tutorService.changePassword(id, currentPassword, newPassword);
+
+        if (changed) {
+            ra.addFlashAttribute("pwSuccess", "Password updated successfully.");
+        } else {
+            ra.addFlashAttribute("pwError", "Current password is incorrect.");
+        }
+        return "redirect:/tutor/profile";
+    }
     @GetMapping("/tutor/verify-otp")
     public String verifyOtpPage(HttpSession session, Model model, RedirectAttributes ra) {
         String pendingEmail = (String) session.getAttribute("pendingEmail");
@@ -174,6 +198,9 @@ public class TutorController {
         Tutor tutor = new Tutor(name, pendingEmail, password, phone, subject,
                 qualification, location, hourlyRate, bio);
         tutorService.registerTutor(tutor);
+
+        // Clean up the verified OTP record so it doesn't block future registrations
+        otpService.deleteOtp(pendingEmail);
 
         emailService.sendWelcomeEmail(pendingEmail, name);
 
@@ -353,6 +380,7 @@ public class TutorController {
         scheduleService.deleteSchedule(scheduleId);
         return "redirect:/tutor/schedule?deleted=true";
     }
+
 
     // ══════════════════════════════════════════════════════════
     //  TUTOR BOOKINGS
