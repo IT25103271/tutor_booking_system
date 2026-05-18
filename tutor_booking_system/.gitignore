@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Package structure consolidation ###
+# Prevent capitalized folder names in Java packages (use lowercase only)
+src/main/java/com/tutorbooking/tutor_booking_system/Controller/
+src/main/java/com/tutorbooking/tutor_booking_system/Model/
+src/main/java/com/tutorbooking/tutor_booking_system/Repository/
+src/main/java/com/tutorbooking/tutor_booking_system/Service/
