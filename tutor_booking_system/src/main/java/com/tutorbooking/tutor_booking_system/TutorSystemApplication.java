@@ -1,4 +1,4 @@
-package com.tutorsystem;
+package com.tutorbooking.tutor_booking_system;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

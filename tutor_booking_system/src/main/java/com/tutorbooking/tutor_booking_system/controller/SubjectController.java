@@ -1,13 +1,3 @@
-<<<<<<< Updated upstream:src/main/java/com/tutorsystem/controller/SubjectController.java
-package com.tutorsystem.controller;
-
-import com.tutorsystem.model.Subject;
-import com.tutorsystem.repository.SubjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-=======
 package com.tutorbooking.tutor_booking_system.controller;
 
 import com.tutorbooking.tutor_booking_system.model.Subject;
@@ -19,27 +9,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
->>>>>>> Stashed changes:src/main/java/com/tutorbooking/tutor_booking_system/controller/SubjectController.java
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
 
-/**
- * SubjectController
- *
- * Uses MySQL database instead of .txt file
- * @Autowired → Spring automatically connects SubjectRepository
- */
 @Controller
 @RequestMapping("/subject")
 public class SubjectController {
 
-    // Spring automatically injects SubjectRepository
     @Autowired
     private SubjectRepository subjectRepository;
 
-    // ── LIST all subjects ──
     @GetMapping("/list")
     public String list(Model model) {
         List<Subject> subjects = subjectRepository.findAll();
@@ -48,7 +29,6 @@ public class SubjectController {
         return "subject/subjectList";
     }
 
-    // ── SEARCH subjects ──
     @GetMapping("/search")
     public String search(@RequestParam(defaultValue = "") String q, Model model) {
         List<Subject> subjects;
@@ -56,20 +36,18 @@ public class SubjectController {
             subjects = subjectRepository.findAll();
         } else {
             subjects = subjectRepository
-                .findBySubjectNameContainingIgnoreCaseOrCategoryContainingIgnoreCaseOrGradeLevelContainingIgnoreCase(q, q, q);
+                    .findBySubjectNameContainingIgnoreCaseOrCategoryContainingIgnoreCaseOrGradeLevelContainingIgnoreCase(q, q, q);
         }
         model.addAttribute("subjects", subjects);
         model.addAttribute("keyword", q);
         return "subject/subjectList";
     }
 
-    // ── SHOW Add form ──
     @GetMapping("/add")
     public String showAdd() {
         return "subject/addSubject";
     }
 
-    // ── CREATE new subject → save to MySQL ──
     @PostMapping("/add")
     public String add(@RequestParam String subjectName,
                       @RequestParam String category,
@@ -77,14 +55,12 @@ public class SubjectController {
                       @RequestParam String description,
                       @RequestParam String status,
                       RedirectAttributes ra) {
-
         Subject subject = new Subject(subjectName, category, gradeLevel, description, status);
-        subjectRepository.save(subject); // saves to MySQL
+        subjectRepository.save(subject);
         ra.addFlashAttribute("message", "Subject '" + subjectName + "' added successfully!");
         return "redirect:/subject/list";
     }
 
-    // ── SHOW Edit form ──
     @GetMapping("/edit")
     public String showEdit(@RequestParam Long id, Model model, RedirectAttributes ra) {
         Optional<Subject> subject = subjectRepository.findById(id);
@@ -96,7 +72,6 @@ public class SubjectController {
         return "subject/editSubject";
     }
 
-    // ── UPDATE subject in MySQL ──
     @PostMapping("/edit")
     public String edit(@RequestParam Long subjectId,
                        @RequestParam String subjectName,
@@ -105,7 +80,6 @@ public class SubjectController {
                        @RequestParam String description,
                        @RequestParam String status,
                        RedirectAttributes ra) {
-
         Optional<Subject> existing = subjectRepository.findById(subjectId);
         if (existing.isPresent()) {
             Subject subject = existing.get();
@@ -114,16 +88,15 @@ public class SubjectController {
             subject.setGradeLevel(gradeLevel);
             subject.setDescription(description);
             subject.setStatus(status);
-            subjectRepository.save(subject); // updates in MySQL
+            subjectRepository.save(subject);
             ra.addFlashAttribute("message", "Subject updated successfully!");
         }
         return "redirect:/subject/list";
     }
 
-    // ── DELETE subject from MySQL ──
     @GetMapping("/delete")
     public String delete(@RequestParam Long id, RedirectAttributes ra) {
-        subjectRepository.deleteById(id); // deletes from MySQL
+        subjectRepository.deleteById(id);
         ra.addFlashAttribute("message", "Subject deleted successfully.");
         return "redirect:/subject/list";
     }
