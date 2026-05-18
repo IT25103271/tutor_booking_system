@@ -1,0 +1,40 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Package structure consolidation ###
+# Prevent capitalized folder names in Java packages (use lowercase only)
+src/main/java/com/tutorbooking/tutor_booking_system/Controller/
+src/main/java/com/tutorbooking/tutor_booking_system/Model/
+src/main/java/com/tutorbooking/tutor_booking_system/Repository/
+src/main/java/com/tutorbooking/tutor_booking_system/Service/
