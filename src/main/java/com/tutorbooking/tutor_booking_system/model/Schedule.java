@@ -2,26 +2,25 @@ package com.tutorbooking.tutor_booking_system.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+
+import java.time.LocalDate;
 
 @Entity
 public class Schedule {
     @Id
     private String scheduleId;
-    
-    @ManyToOne
-    @JoinColumn(name = "tutor_id")
-    private Tutor tutor;
-    
-    private String availableDate;
+
+    private String tutorId;
+
+    private LocalDate availableDate;  // Changed from String to LocalDate
+
     private String timeSlot;
 
     public Schedule() {}
 
-    public Schedule(String scheduleId, Tutor tutor, String availableDate, String timeSlot) {
+    public Schedule(String scheduleId, String tutorId, LocalDate availableDate, String timeSlot) {
         this.scheduleId = scheduleId;
-        this.tutor = tutor;
+        this.tutorId = tutorId;
         this.availableDate = availableDate;
         this.timeSlot = timeSlot;
     }
@@ -30,13 +29,12 @@ public class Schedule {
     public String getScheduleId() { return scheduleId; }
     public void setScheduleId(String scheduleId) { this.scheduleId = scheduleId; }
 
-    public Tutor getTutor() { return tutor; }
-    public void setTutor(Tutor tutor) { this.tutor = tutor; }
+    public String getTutorId() { return tutorId; }
+    public void setTutorId(String tutorId) { this.tutorId = tutorId; }
 
-    public String getAvailableDate() { return availableDate; }
-    public void setAvailableDate(String availableDate) { this.availableDate = availableDate; }
+    public LocalDate getAvailableDate() { return availableDate; }
+    public void setAvailableDate(LocalDate availableDate) { this.availableDate = availableDate; }
 
     public String getTimeSlot() { return timeSlot; }
     public void setTimeSlot(String timeSlot) { this.timeSlot = timeSlot; }
 }
-

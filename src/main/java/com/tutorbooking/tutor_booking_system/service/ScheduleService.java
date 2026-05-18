@@ -6,6 +6,7 @@ import com.tutorbooking.tutor_booking_system.util.IDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -18,13 +19,24 @@ public class ScheduleService {
     }
 
     public List<Schedule> getSchedulesByTutor(String tutorId) {
-        return scheduleRepository.findByTutor_TutorId(tutorId);
+        return scheduleRepository.findByTutorId(tutorId);
+    }
+
+    // ← ADD: for ownership check in controller before deleting
+    public Schedule getScheduleById(String scheduleId) {
+        return scheduleRepository.findById(scheduleId).orElse(null);
+    }
+
+    // ← ADD: for booking page — only show future/today slots
+    public List<Schedule> getAvailableSchedules(String tutorId) {
+        return scheduleRepository.findByTutorIdAndAvailableDateGreaterThanEqual(tutorId, LocalDate.now());
     }
 
     public boolean addSchedule(Schedule schedule) {
-        // Prevent duplicate time slots for the same tutor on the same date
-        boolean duplicate = scheduleRepository.existsByTutor_TutorIdAndAvailableDateAndTimeSlot(
-                schedule.getTutor().getTutorId(), schedule.getAvailableDate(), schedule.getTimeSlot()
+        boolean duplicate = scheduleRepository.isDuplicateSlot(
+                schedule.getTutorId(),
+                schedule.getAvailableDate(),
+                schedule.getTimeSlot()
         );
 
         if (duplicate) return false;
@@ -38,8 +50,18 @@ public class ScheduleService {
         scheduleRepository.save(schedule);
     }
 
+    // Delete all schedules for a tutor (called before deleting tutor account)
+    public void deleteSchedulesByTutorId(Long tutorId) {
+        List<Schedule> schedules = scheduleRepository.findByTutorId(String.valueOf(tutorId));
+        for (Schedule s : schedules) {
+            scheduleRepository.deleteById(s.getScheduleId());
+        }
+    }
+
+    // ← FIXED: safe delete — won't throw if ID doesn't exist
     public void deleteSchedule(String scheduleId) {
-        scheduleRepository.deleteById(scheduleId);
+        if (scheduleRepository.existsById(scheduleId)) {
+            scheduleRepository.deleteById(scheduleId);
+        }
     }
 }
-

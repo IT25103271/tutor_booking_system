@@ -1,277 +1,389 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile | Tutor Booking</title>
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --dark-navy: #1a1a2e;
-            --navy-blue: #16213e;
-            --accent-red: #e94560;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-light: #f8fafc;
-            --text-muted: #94a3b8;
-        }
+<% request.setAttribute("activePage", "profile"); %>
+<% request.setAttribute("pageTitle", "Profile"); %>
+<% request.setAttribute("pageIcon", "person-gear"); %>
+<%@ include file="../layout/tutor_layout.jsp" %>
 
-        body {
-            background: #f0f2f5;
-            font-family: 'Inter', sans-serif;
-            color: #1a1a2e;
-            overflow-x: hidden;
-        }
+<style>
+    .section-title {
+        color: var(--navy);
+        font-weight: 700;
+        border-left: 4px solid var(--navy2, var(--navy));
+        padding-left: 10px;
+        margin: 1.75rem 0 1rem;
+        font-size: 1rem;
+    }
 
-        /* Navbar Styles */
-        .navbar {
-            background: linear-gradient(135deg, var(--dark-navy), var(--navy-blue));
-            padding: 1rem 2rem;
-            border-bottom: 2px solid var(--accent-red);
-            backdrop-filter: blur(10px);
-        }
+    /* Fix: Equal height stat cards */
+    .stat-card-fixed {
+        height: 100%;
+        min-height: 160px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
 
-        .navbar-brand {
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: white !important;
-        }
+    /* Fix: Email text size */
+    .email-text {
+        font-size: 0.95rem;
+        word-break: break-all;
+        line-height: 1.3;
+        max-width: 100%;
+    }
 
-        .nav-link {
-            color: rgba(255,255,255,0.8) !important;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
+    /* Fix: Icon size consistency */
+    .stat-icon {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        height: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        .nav-link:hover {
-            color: var(--accent-red) !important;
-        }
+    /* Fix: Value text consistency */
+    .stat-value {
+        font-size: 1.75rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 0.25rem;
+    }
 
-        /* Profile Header */
-        .profile-header {
-            background: linear-gradient(135deg, var(--dark-navy) 0%, var(--navy-blue) 100%);
-            color: white;
-            border-radius: 20px;
-            padding: 3.5rem 2.5rem;
-            margin-bottom: 2.5rem;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 5px solid var(--accent-red);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            animation: fadeInDown 0.8s ease-out;
-        }
+    /* Fix: Label text */
+    .stat-label {
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
 
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 25px;
-            background: rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.5rem;
-            font-weight: 800;
-            border: 3px solid var(--accent-red);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+    /* Password strength indicator */
+    .pw-strength {
+        height: 4px;
+        border-radius: 2px;
+        margin-top: 0.5rem;
+        transition: all 0.3s;
+        background: #e5e7eb;
+    }
 
-        .card-custom {
-            background: white;
-            border-radius: 20px;
-            border: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            padding: 2.5rem;
-            animation: fadeInUp 0.8s ease-out both;
-        }
+    .pw-strength.weak   { background: #ef4444; width: 33%; }
+    .pw-strength.medium { background: #f59e0b; width: 66%; }
+    .pw-strength.strong { background: #10b981; width: 100%; }
 
-        .info-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: #64748b;
-            font-weight: 700;
-            margin-bottom: 4px;
-            letter-spacing: 0.5px;
-        }
+    .pw-hint         { font-size: 0.8rem; color: #6b7280; margin-top: 0.25rem; }
+    .pw-hint.invalid { color: #dc2626; }
+    .pw-hint.valid   { color: #059669; }
+</style>
 
-        .info-value {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--dark-navy);
-            margin-bottom: 1.5rem;
-        }
+<!-- Flash alerts -->
+<c:if test="${not empty success}">
+    <div class="alert alert-success alert-dismissible rounded-3 border-0 small py-2 mb-3">
+        <i class="bi bi-check-circle me-1"></i>${success}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+</c:if>
+<c:if test="${not empty error}">
+    <div class="alert alert-danger alert-dismissible rounded-3 border-0 small py-2 mb-3">
+        <i class="bi bi-exclamation-triangle me-1"></i>${error}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+</c:if>
 
-        .section-title {
-            font-weight: 800;
-            color: var(--dark-navy);
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-title i {
-            color: var(--accent-red);
-        }
-
-        .btn-custom {
-            border-radius: 12px;
-            padding: 0.8rem 1.5rem;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-navy {
-            background: var(--dark-navy);
-            color: white;
-            border: none;
-        }
-
-        .btn-navy:hover {
-            background: var(--navy-blue);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .footer {
-            background: var(--dark-navy);
-            color: rgba(255,255,255,0.6);
-            padding: 4rem 0 2rem;
-            margin-top: 5rem;
-            border-top: 3px solid var(--accent-red);
-        }
-    </style>
-</head>
-<body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="${pageContext.request.contextPath}/tutor/dashboard">
-                <i class="bi bi-mortarboard-fill me-2 fs-3 text-white"></i>
-                <span class="fs-4">Tutor Booking <span class="text-white-50 fs-6 fw-normal">| Tutor Portal</span></span>
-            </a>
-            <div class="ms-auto">
-                <ul class="navbar-nav align-items-center">
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/tutor/dashboard">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="${pageContext.request.contextPath}/logout" class="btn btn-outline-light btn-sm rounded-pill px-3">
-                            <i class="bi bi-box-arrow-right me-1"></i>Logout
-                        </a>
-                    </li>
-                </ul>
+<!-- Profile Header -->
+<div class="card border-0 shadow-sm rounded-3 mb-4">
+    <div class="card-body p-4">
+        <div class="d-flex align-items-center gap-4">
+            <div class="user-avatar" style="width: 80px; height: 80px; font-size: 2rem; background: var(--navy); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <c:choose>
+                    <c:when test="${not empty tutor.name}">
+                        ${tutor.name.substring(0,1).toUpperCase()}
+                    </c:when>
+                    <c:otherwise>T</c:otherwise>
+                </c:choose>
             </div>
-        </div>
-    </nav>
-
-    <div class="container py-5">
-        <c:if test="${param.updated}">
-            <div class="alert alert-success border-0 shadow-sm rounded-4 mb-4" role="alert">
-                <i class="bi bi-check-circle-fill me-2"></i> Profile updated successfully!
-            </div>
-        </c:if>
-
-        <div class="profile-header shadow-lg">
-            <div class="row align-items-center g-4">
-                <div class="col-auto">
-                    <div class="profile-avatar">${tutor.fullName.substring(0, 1)}</div>
-                </div>
-                <div class="col">
-                    <p class="text-white-50 fw-semibold mb-1" style="letter-spacing: 1px;">TUTOR PROFILE</p>
-                    <h1 class="fw-bold mb-2 display-5">${tutor.fullName}</h1>
-                    <div class="d-flex flex-wrap align-items-center gap-3">
-                        <span class="badge bg-danger rounded-pill px-3 py-2" style="font-size: 0.8rem;">
-                            <i class="bi bi-patch-check-fill me-1"></i> ${tutor.subject} Specialist
-                        </span>
-                        <span class="text-white-50 small">
-                            <i class="bi bi-mortarboard-fill me-1"></i> ${tutor.qualification}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-custom">
-            <div class="row g-5">
-                <div class="col-lg-6">
-                    <h4 class="section-title"><i class="bi bi-person-lines-fill"></i> Contact Information</h4>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="info-label">Email Address</div>
-                            <div class="info-value">${tutor.email}</div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="info-label">Phone Number</div>
-                            <div class="info-value">${tutor.phoneNumber}</div>
-                        </div>
-                        <div class="col-12">
-                            <div class="info-label">Tutor ID</div>
-                            <div class="info-value">#${tutor.tutorId}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <h4 class="section-title"><i class="bi bi-book-half"></i> Academic Details</h4>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="info-label">Experience</div>
-                            <div class="info-value">${tutor.experience} Years</div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="info-label">Hourly Rate</div>
-                            <div class="info-value">Rs ${tutor.hourlyRate}/hr</div>
-                        </div>
-                        <div class="col-12">
-                            <div class="info-label">Availability</div>
-                            <div class="info-value">${tutor.availableDays}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <h4 class="section-title"><i class="bi bi-info-circle-fill"></i> About Me</h4>
-                    <div class="bg-light p-4 rounded-4 text-muted" style="line-height: 1.8;">
-                        ${tutor.aboutTutor}
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-5 d-flex gap-3">
-                <a href="${pageContext.request.contextPath}/tutor/editProfile" class="btn btn-navy btn-custom px-5">
-                    <i class="bi bi-pencil-square me-2"></i>Edit Profile
-                </a>
-                <a href="${pageContext.request.contextPath}/tutor/dashboard" class="btn btn-outline-secondary btn-custom px-5">
-                    <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
-                </a>
+            <div>
+                <h3 class="fw-bold mb-1">${tutor.name}</h3>
+                <p class="text-muted mb-0">${tutor.email}
+                    <c:if test="${tutor.verified}">
+                        <span class="badge bg-success ms-2"><i class="bi bi-patch-check me-1"></i>Verified Tutor</span>
+                    </c:if>
+                </p>
             </div>
         </div>
     </div>
+</div>
 
-    <footer class="footer">
-        <div class="container text-center">
-            <h5 class="text-white fw-bold mb-2">Tutor Booking</h5>
-            <p class="mb-0 small text-white-50">&copy; 2026 Tutor Booking | Developed for Education</p>
+<!-- Edit Profile Form -->
+<h6 class="section-title"><i class="bi bi-pencil-square me-2"></i>Edit Profile</h6>
+<div class="card border-0 shadow-sm rounded-3 mb-4">
+    <div class="card-body p-4">
+        <form action="/tutor/profile/update" method="post">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Full Name</label>
+                    <input type="text" name="name" class="form-control" value="${tutor.name}" required/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Phone</label>
+                    <input type="text" name="phone" class="form-control" value="${tutor.phone}"/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Subject</label>
+                    <select name="subject" class="form-select" required>
+                        <option value="" disabled <c:if test="${empty tutor.subject}">selected</c:if>>Select your subject</option>
+                        <c:forEach var="sub" items="${subjects}">
+                            <option value="${sub.subjectName}" <c:if test="${tutor.subject == sub.subjectName}">selected</c:if>>${sub.subjectName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Qualification</label>
+                    <input type="text" name="qualification" class="form-control" value="${tutor.qualification}"/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Location</label>
+                    <input type="text" name="location" class="form-control" value="${tutor.location}"/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Hourly Rate (LKR)</label>
+                    <input type="number" name="hourlyRate" class="form-control"
+                           value="${tutor.hourlyRate}" step="0.01" min="0" required/>
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-semibold">Bio</label>
+                    <textarea name="bio" class="form-control" rows="4">${tutor.bio}</textarea>
+                </div>
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-navy px-4 fw-semibold">
+                    <i class="bi bi-save me-2"></i>Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Change Password -->
+<h6 class="section-title"><i class="bi bi-shield-lock me-2"></i>Change Password</h6>
+<div class="card border-0 shadow-sm rounded-3 mb-4">
+    <div class="card-body p-4">
+        <c:if test="${not empty pwError}">
+            <div class="alert alert-danger rounded-3 border-0 small py-2 mb-3">
+                <i class="bi bi-exclamation-triangle me-1"></i>${pwError}
+            </div>
+        </c:if>
+        <c:if test="${not empty pwSuccess}">
+            <div class="alert alert-success rounded-3 border-0 small py-2 mb-3">
+                <i class="bi bi-check-circle me-1"></i>${pwSuccess}
+            </div>
+        </c:if>
+
+        <form id="changePwForm" action="/tutor/profile/changePassword" method="post">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Current Password</label>
+                    <input type="password" name="currentPassword" class="form-control" required/>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">New Password</label>
+                    <input type="password" id="newPassword" name="newPassword" class="form-control"
+                           required minlength="8"/>
+                    <div id="pwStrength" class="pw-strength"></div>
+                    <div id="pwHint" class="pw-hint">Minimum 8 characters required</div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required/>
+                    <div id="matchHint" class="pw-hint" style="display:none;">
+                        <i class="bi bi-x-circle me-1"></i>Passwords do not match
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <button type="submit" id="pwSubmitBtn" class="btn btn-navy px-4 fw-semibold">
+                    <i class="bi bi-key me-2"></i>Update Password
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Stats Cards - FIXED -->
+<h6 class="section-title"><i class="bi bi-graph-up me-2"></i>Performance Overview</h6>
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card stat-card stat-card-fixed" style="border-left-color: #ffc107;">
+            <div class="stat-icon text-warning">
+                <i class="bi bi-star-fill"></i>
+            </div>
+            <div class="stat-value text-warning">${tutor.rating != null ? tutor.rating : '0.0'}</div>
+            <div class="stat-label">Average Rating</div>
         </div>
-    </footer>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card stat-card-fixed" style="border-left-color: var(--accent);">
+            <div class="stat-icon text-info">
+                <i class="bi bi-chat-square-text"></i>
+            </div>
+            <div class="stat-value text-info">${tutor.reviewCount != null ? tutor.reviewCount : '0'}</div>
+            <div class="stat-label">Total Reviews</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card stat-card-fixed" style="border-left-color: var(--navy);">
+            <div class="stat-icon text-primary">
+                <i class="bi bi-envelope"></i>
+            </div>
+            <div class="stat-value email-text text-primary">${tutor.email}</div>
+            <div class="stat-label">Email (read-only)</div>
+        </div>
+    </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<script>
+    (function() {
+        const newPw = document.getElementById('newPassword');
+        const confirmPw = document.getElementById('confirmPassword');
+        const strengthBar = document.getElementById('pwStrength');
+        const pwHint = document.getElementById('pwHint');
+        const matchHint = document.getElementById('matchHint');
+        const submitBtn = document.getElementById('pwSubmitBtn');
+        const form = document.getElementById('changePwForm');
+
+        function updateStrength() {
+            const val = newPw.value;
+            strengthBar.className = 'pw-strength';
+            if (val.length === 0) {
+                pwHint.textContent = 'Minimum 8 characters required';
+                pwHint.className = 'pw-hint';
+                return;
+            }
+            if (val.length < 8) {
+                strengthBar.classList.add('weak');
+                pwHint.textContent = 'Too short — minimum 8 characters';
+                pwHint.className = 'pw-hint invalid';
+            } else if (val.length < 12) {
+                strengthBar.classList.add('medium');
+                pwHint.textContent = 'Good — 8+ characters';
+                pwHint.className = 'pw-hint valid';
+            } else {
+                strengthBar.classList.add('strong');
+                pwHint.textContent = 'Strong password';
+                pwHint.className = 'pw-hint valid';
+            }
+        }
+
+        function checkMatch() {
+            if (confirmPw.value.length === 0) {
+                matchHint.style.display = 'none';
+                return;
+            }
+            if (newPw.value !== confirmPw.value) {
+                matchHint.style.display = 'block';
+                matchHint.className = 'pw-hint invalid';
+                matchHint.innerHTML = '<i class="bi bi-x-circle me-1"></i>Passwords do not match';
+            } else {
+                matchHint.style.display = 'block';
+                matchHint.className = 'pw-hint valid';
+                matchHint.innerHTML = '<i class="bi bi-check-circle me-1"></i>Passwords match';
+            }
+        }
+
+        function validateForm(e) {
+            if (newPw.value.length < 8) {
+                e.preventDefault();
+                newPw.focus();
+                return false;
+            }
+            if (newPw.value !== confirmPw.value) {
+                e.preventDefault();
+                confirmPw.focus();
+                return false;
+            }
+            return true;
+        }
+
+        newPw.addEventListener('input', updateStrength);
+        confirmPw.addEventListener('input', checkMatch);
+        form.addEventListener('submit', validateForm);
+    })();
+</script>
+
+<!-- Delete Account -->
+<h6 class="section-title mt-4"><i class="bi bi-trash me-2"></i>Danger Zone</h6>
+<c:if test="${not empty deleteError}">
+    <div class="alert alert-danger rounded-3 border-0 small py-2 mb-3">
+        <i class="bi bi-exclamation-triangle me-1"></i>${deleteError}
+    </div>
+</c:if>
+<div class="card border-0 shadow-sm rounded-3 mb-4 border-danger" style="border: 1px solid #f8d7da !important;">
+    <div class="card-body p-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+            <div>
+                <h6 class="fw-bold text-danger mb-1">Delete My Account</h6>
+                <p class="text-muted small mb-0">
+                    Permanently removes your profile, schedules, and all associated data. This action cannot be undone.
+                </p>
+            </div>
+            <button type="button" class="btn btn-outline-danger fw-semibold px-4"
+                    data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                <i class="bi bi-trash me-2"></i>Delete Account
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold text-danger" id="deleteAccountModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>Delete Account
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-2">
+                <p class="text-muted">This will permanently delete your account and all associated data including bookings and schedules. You will be logged out immediately.</p>
+                <p class="fw-semibold mb-3">Type your password to confirm:</p>
+                <input type="password" id="deleteConfirmPassword" class="form-control"
+                       placeholder="Enter your current password" autocomplete="off"/>
+                <div id="deletePasswordError" class="text-danger small mt-1" style="display:none;">
+                    <i class="bi bi-exclamation-circle me-1"></i>Please enter your password to continue.
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteAccountForm" action="/tutor/profile/delete" method="post">
+                    <input type="hidden" name="confirmPassword" id="deleteConfirmPasswordHidden"/>
+                    <button type="button" class="btn btn-danger fw-semibold" id="confirmDeleteBtn">
+                        <i class="bi bi-trash me-2"></i>Yes, Delete My Account
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
+        const pw = document.getElementById('deleteConfirmPassword').value.trim();
+        const err = document.getElementById('deletePasswordError');
+        if (!pw) {
+            err.style.display = 'block';
+            return;
+        }
+        err.style.display = 'none';
+        document.getElementById('deleteConfirmPasswordHidden').value = pw;
+        document.getElementById('deleteAccountForm').submit();
+    });
+
+    // Clear password field when modal is closed
+    document.getElementById('deleteAccountModal').addEventListener('hidden.bs.modal', function () {
+        document.getElementById('deleteConfirmPassword').value = '';
+        document.getElementById('deletePasswordError').style.display = 'none';
+    });
+</script>
+
+<%@ include file="../layout/tutor_layout-footer.jsp" %>
