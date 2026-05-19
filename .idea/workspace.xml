@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9011fe47-b19f-43d5-a989-c38971443eb3" name="Changes" comment="Edit corrupted files and add">
+    <list default="true" id="9011fe47-b19f-43d5-a989-c38971443eb3" name="Changes" comment="finale">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/repository/BookingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/repository/BookingRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/repository/ReviewRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/service/BookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/service/BookingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/service/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/service/StudentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/controller/HomeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/controller/HomeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/service/StudentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/service/StudentService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +134,7 @@
       <workItem from="1779134253937" duration="9460000" />
       <workItem from="1779143909496" duration="217000" />
       <workItem from="1779145234644" duration="639000" />
-      <workItem from="1779167136356" duration="1761000" />
+      <workItem from="1779167136356" duration="3505000" />
     </task>
     <task id="LOCAL-00001" summary="Edit corrupted files and add">
       <option name="closed" value="true" />
@@ -145,7 +144,23 @@
       <option name="project" value="LOCAL" />
       <updated>1779145828386</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="finale">
+      <option name="closed" value="true" />
+      <created>1779168936951</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1779168936951</updated>
+    </task>
+    <task id="LOCAL-00003" summary="finale">
+      <option name="closed" value="true" />
+      <created>1779169163834</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1779169163834</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,6 +168,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Edit corrupted files and add" />
-    <option name="LAST_COMMIT_MESSAGE" value="Edit corrupted files and add" />
+    <MESSAGE value="finale" />
+    <option name="LAST_COMMIT_MESSAGE" value="finale" />
   </component>
 </project>

@@ -16,16 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * AdminController
- *
- * Handles: Admin authentication, dashboard stats/charts, and admin profile management.
- *
- * Tutor management   → TutorController  (/admin/tutors/...)
- * Student management → StudentController (/admin/students/...)
- * Booking management → BookingController (/admin/bookings/...)
- * Review management  → ReviewController  (/admin/reviews/...)
- */
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -126,9 +117,9 @@ public class AdminController {
         return "admin/dashboard";
     }
 
-    // ══════════════════════════════════════════════════════════
+
     //  PROFILE — VIEW / EDIT / CHANGE PASSWORD / DELETE ACCOUNT
-    // ══════════════════════════════════════════════════════════
+
 
     @GetMapping("/profile")
     public String profilePage(HttpSession session, Model model) {
