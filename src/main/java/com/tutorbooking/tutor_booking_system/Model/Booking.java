@@ -93,7 +93,7 @@ public class Booking {
     public String getDate() {
         return sessionDate != null ? sessionDate.toString() : "";
     }
-
+    //E
     public String getTimeSlot() {
         if (startTime == null || endTime == null) return "";
         java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("hh:mm a", java.util.Locale.ENGLISH);
