@@ -5,6 +5,7 @@ import com.tutorbooking.tutor_booking_system.model.Booking.Status;
 import com.tutorbooking.tutor_booking_system.model.Student;
 import com.tutorbooking.tutor_booking_system.model.Tutor;
 import com.tutorbooking.tutor_booking_system.repository.BookingRepository;
+import com.tutorbooking.tutor_booking_system.repository.ReviewRepository;
 import com.tutorbooking.tutor_booking_system.repository.StudentRepository;
 import com.tutorbooking.tutor_booking_system.repository.TutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,11 @@ public class BookingService {
 
     @Autowired
     private TutorRepository tutorRepository;
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Autowired
+
     private StudentRepository studentRepository;
 
     public List<Booking> getAllBookings() {
@@ -131,6 +135,8 @@ public class BookingService {
     }
 
     public void deleteBooking(Long id) {
+
+        reviewRepository.deleteByBookingId(id);
         bookingRepository.deleteById(id);
     }
 }

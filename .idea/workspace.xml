@@ -4,74 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9011fe47-b19f-43d5-a989-c38971443eb3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/layout/student-layout-footer.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/layout/student-layout.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/tutor/dashboard.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="9011fe47-b19f-43d5-a989-c38971443eb3" name="Changes" comment="Edit corrupted files and add">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/DataInitializer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/TutorSystemApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/controller/AdminForgotPasswordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/controller/AdminForgotPasswordController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/controller/ForgotPasswordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/controller/ForgotPasswordController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/controller/StudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/controller/StudentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/controller/StudentForgotPasswordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/controller/StudentForgotPasswordController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/controller/TutorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/controller/TutorController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/repository/BookingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/repository/BookingRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/repository/StudentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/repository/StudentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/service/OtpService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/service/OtpService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/repository/ReviewRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/service/BookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/service/BookingService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/service/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/service/StudentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/service/TutorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tutorbooking/tutor_booking_system/service/TutorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/dashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/dashboard.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/edit.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/login.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin/register.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/layout/admin_layout-footer.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/layout/admin_layout-footer.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/layout/admin_layout.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/layout/admin_layout.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/layout/tutor_layout-footer.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/layout/tutor_layout-footer.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/tutor/login.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/register.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/tutor/register.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/review/tutor_reviews.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/review/tutor_reviews.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/student/book-tutor.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/student/my-bookings.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/student/view-subjects.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/student/view-tutors.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/subject/addSubject.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/subject/addSubject.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/subject/editSubject.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/subject/editSubject.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/subject/subjectList.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/subject/subjectList.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/subject/view-subjects.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/subject/view-subjects.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/admin_bookings.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/booking/admin_bookings.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/book-tutor.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/booking/book-tutor.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/my-bookings.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/booking/my-bookings.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/tutor_bookings.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/booking/tutor_bookings.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/DataInitializer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/ServletInitializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/ServletInitializer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/TutorBookingSystemApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/TutorBookingSystemApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/controller/AdminController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/controller/AdminForgotPasswordController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/controller/AdminForgotPasswordController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/controller/HomeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/controller/HomeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/controller/StudentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/controller/StudentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/controller/StudentForgotPasswordController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/controller/StudentForgotPasswordController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/model/Admin.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/model/Admin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/model/OtpVerification.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/model/OtpVerification.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/model/Student.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/model/Student.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/model/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/repository/AdminRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/repository/AdminRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/repository/OtpVerificationRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/repository/OtpVerificationRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/repository/StudentRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/repository/StudentRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/scheduler/OtpCleanupTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/scheduler/OtpCleanupTask.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/service/AdminService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/service/AdminService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/service/EmailService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/service/EmailService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/service/OtpService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/service/OtpService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/service/StudentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tutorbooking/tutor_booking_system/service/StudentService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorsystem/HomeController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorsystem/TutorSystemApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorsystem/controller/SubjectController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorsystem/model/Subject.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/tutorsystem/repository/SubjectRepository.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,34 +43,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Unnamed.executor": "Run",
-    "Maven.tutor_booking_system.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Spring Boot.Unnamed.executor": "Run",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/ASUS/Music/New folder (3)/src/main/webapp/WEB-INF/views/subject",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.tutor_booking_system.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ASUS/Music/New folder (3)/src/main/webapp/WEB-INF/views/subject&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ASUS\Music\New folder (3)\src\main\webapp\WEB-INF\views\subject" />
@@ -196,11 +134,25 @@
       <updated>1776773180011</updated>
       <workItem from="1779134253937" duration="9460000" />
       <workItem from="1779143909496" duration="217000" />
-      <workItem from="1779145234644" duration="354000" />
+      <workItem from="1779145234644" duration="639000" />
+      <workItem from="1779167136356" duration="1761000" />
     </task>
+    <task id="LOCAL-00001" summary="Edit corrupted files and add">
+      <option name="closed" value="true" />
+      <created>1779145828386</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1779145828386</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Edit corrupted files and add" />
+    <option name="LAST_COMMIT_MESSAGE" value="Edit corrupted files and add" />
   </component>
 </project>

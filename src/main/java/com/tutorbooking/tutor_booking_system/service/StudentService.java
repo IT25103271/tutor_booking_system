@@ -15,6 +15,7 @@ public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
     private BookingRepository bookingRepository;
 
     public Student registerStudent(Student student) {
@@ -47,7 +48,7 @@ public class StudentService {
     @Transactional
     public void deleteStudent(Long id) {
         // Step 1: Delete all bookings for this student
-        List<Booking> bookings = bookingRepository.findByStudentId(id);
+        List<Booking> bookings = bookingRepository.findByStudent_Id(id);
         for (Booking booking : bookings) {
             bookingRepository.delete(booking);
         }

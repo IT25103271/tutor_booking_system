@@ -28,4 +28,10 @@ boolean existsByStudentIdAndBookingId(Long studentId, Long bookingId);
 
 @Query("SELECT r.rating, COUNT(r) FROM Review r GROUP BY r.rating ORDER BY r.rating")
 List<Object[]> countByRating();
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Review r WHERE r.bookingId = :bookingId")
+    void deleteByBookingId(@Param("bookingId") Long bookingId);
 }
+
