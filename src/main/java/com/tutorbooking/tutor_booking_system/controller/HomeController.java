@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping("/")
+    @GetMapping("/index")
     public String home() {
         // Redirect to student login by default or a landing page
-        return "redirect:/student/login";
+        return "redirect:/index";
     }
 }
